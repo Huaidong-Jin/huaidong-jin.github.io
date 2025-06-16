@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>日本の金融業界 インタラクティブ分析レポート - Huaidong Jin</title>
+    <title>日本の金融業界 インタラクティブ分析レポート (Gemini AI搭載版) - Huaidong Jin</title>
     <link rel="stylesheet" href="/jimmykin-website/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -109,51 +109,44 @@
     </style>
 </head>
 <body class="antialiased">
-    <div class="container">
-        <header>
-            <nav>
-                <div class="logo">
-                    <a href="/jimmykin-website/">HJ</a>
-                </div>
-                <div class="nav-links">
-                    <a href="/jimmykin-website/">Home</a>
-                    <a href="/jimmykin-website/about.html">About</a>
-                    <a href="/jimmykin-website/posts/first-post.html" class="active">Blog</a>
-                    <a href="https://github.com/JimmyKin" target="_blank">Projects</a>
-                </div>
-            </nav>
-        </header>
+    <!-- Application Structure Plan: A top-level navigation system filters a central dashboard. The default 'Overview' view shows macro trends (Transformation, Challenges, Future). Selecting a sector (Banking, Securities, Insurance) updates the dashboard to show a sector-specific snapshot, an interactive HTML/CSS workflow diagram, and a comparable financial performance chart. This structure prioritizes user-driven exploration and direct comparison over the report's linear narrative, making complex information digestible and engaging. -->
+    <!-- Visualization & Content Choices: 1. Financial Performance: Interactive Bar Chart (Chart.js) to compare key players across multiple metrics (revenue, profit) selected by the user. Goal: Compare. Justification: Dynamic comparison in a single component. 2. Operational Flow: Interactive Diagram (HTML/Tailwind) with clickable stages (Front/Middle/Back Office) that reveal detailed text. Goal: Organize/Explain. Justification: Visually intuitive and interactive alternative to static text; avoids SVG/Mermaid. 3. Transformation Drivers/Challenges: Interactive Cards (HTML/Tailwind) that expand/show modals on click. Goal: Inform. Justification: Breaks down text, encourages exploration. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
-        <main class="post-content">
-            <article>
-                <h1>日本の金融業界 インタラクティブ分析レポート</h1>
-                <div class="post-meta">
-                    <span class="date">2024年3月20日</span>
-                    <span class="author">by Huaidong Jin</span>
-                </div>
-                
-                <div class="content">
-                    <div id="main-nav" class="flex flex-wrap justify-center space-x-2 mb-8">
+    <div class="min-h-screen">
+        <header class="bg-white shadow-sm sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col sm:flex-row justify-between items-center">
+                    <div class="flex items-center space-x-4 mb-4 sm:mb-0">
+                        <a href="/jimmykin-website/" class="text-2xl font-bold text-slate-900 hover:text-sky-600 transition">HJ</a>
+                        <div class="hidden sm:flex space-x-4">
+                            <a href="/jimmykin-website/" class="text-slate-600 hover:text-slate-900 transition">Home</a>
+                            <a href="/jimmykin-website/about.html" class="text-slate-600 hover:text-slate-900 transition">About</a>
+                            <a href="/jimmykin-website/posts/first-post.html" class="text-sky-600 font-semibold">Blog</a>
+                            <a href="https://github.com/JimmyKin" target="_blank" class="text-slate-600 hover:text-slate-900 transition">Projects</a>
+                        </div>
+                    </div>
+                    <h1 class="text-2xl font-bold text-slate-900 text-center sm:text-left">日本の金融業界 インタラクティブ分析</h1>
+                    <nav id="main-nav" class="flex flex-wrap justify-center space-x-2 mt-4 sm:mt-0">
                         <button data-view="overview" class="nav-button active font-semibold py-2 px-4 rounded-full text-sm sm:text-base">全体像</button>
                         <button data-view="banking" class="nav-button font-semibold py-2 px-4 rounded-full text-sm sm:text-base">銀行</button>
                         <button data-view="securities" class="nav-button font-semibold py-2 px-4 rounded-full text-sm sm:text-base">証券</button>
                         <button data-view="insurance" class="nav-button font-semibold py-2 px-4 rounded-full text-sm sm:text-base">保険</button>
-                    </div>
-                    <div id="app-content" class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-                        <!-- Content will be rendered here by JavaScript -->
+                    </nav>
+                </div>
+                <div class="mt-4 text-center">
+                    <div class="text-sm text-slate-600">
+                        <span class="date">2025年06月16日</span>
+                        <span class="mx-2">•</span>
+                        <span class="author">by Huaidong Jin</span>
                     </div>
                 </div>
-            </article>
-        </main>
-
-        <footer>
-            <div class="social-links">
-                <a href="https://github.com/JimmyKin" target="_blank" title="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
             </div>
-            <p>© 2024 Huaidong Jin. All rights reserved.</p>
-        </footer>
+        </header>
+
+        <main id="app-content" class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <!-- Content will be rendered here by JavaScript -->
+        </main>
     </div>
 
     <!-- Modal Structure -->
@@ -290,7 +283,7 @@ const reportData = {
         esg: { title: "ESG経営の浸透", content: "日本におけるESGは、欧米のような政治的な対立とは一線を画し、国の長期的な経済競争力を高めるための「産業政策」として位置づけられています。政府は2050年のカーボンニュートラル達成を目標に掲げ、GX（グリーン・トランスフォーメーション）債を発行するなど、金融システムを通じて産業界の脱炭素化を後押ししています。\n\nこの動きを決定づけたのが、世界最大の年金基金であるGPIFの存在です。GPIFが早期からESG投資を本格化させたことで、市場全体のESGへの取り組みが加速しました。企業の気候関連リスクの情報開示を求めるコーポレートガバナンス・コードの改訂も、この流れを後押ししています。" },
         embedded: { title: "Embedded Finance (組込型金融)", content: "金融の未来像の一つが、金融サービスが日常生活のあらゆる場面に「溶け込む」世界です。例えば、ECサイトで商品購入と同時にローンを組んだり、旅行予約サイトで保険に加入したりすることが当たり前になります。このトレンドにより、金融機関は、BaaSプロバイダーとして非金融企業に金融機能を提供する「インフラ屋」になるか、あるいは様々なプラットフォーム上で顧客に選ばれる「ブランド」となるかの戦略的選択を迫られます。" },
         personalization: { title: "ハイパー・パーソナライゼーション", content: "これからの金融サービスでは、顧客を大まかなセグメントで分けるのではなく、データとAIを用いて一人ひとりの状況や目標に合わせた最適なアドバイスや商品をリアルタイムで提供する「ハイパー・パーソナライゼーション」が競争力の源泉となります。これを実現するには、サイロ化された顧客データを統合し、顧客の金融生活全体を360度から理解する高度なデータ分析基盤が不可欠です。" },
-        ecosystem: { title: "エコシステム・オーケストレーター", content: "伝統的な、自前主義の垂直統合型金融機関のモデルは時代遅れになりつつあります。未来のリーディングカンパニーは、自社で全ての機能を開発するのではなく、フィンテック企業、ITジャイアント、さらにはヘルスケアやリテールといった他業種の企業とも戦略的にパートナーシップを組み、より広範な顧客の課題を解決する「エコシステム」を主導する「オーケストレーター」としての役割を担うことになるでしょう。" }
+        ecosystem: { title: "エコシステム・オーケストレーター", content: "伝統的な、自前主義の垂直統合型金融機関のモデルは時代遅れになりつつあります。未来のリーディングカンパニーは、自社で全ての機能を開発するのではなく、フィンテック企業、ITジャイアント、さらにはヘルスケアやリテールといった他業種の企業とも戦略的にパートナーシップを組み、より広範な顧客の課題を解決する「エコシステム」を主導する「オーケストレーター」としての役割を担うことになるでしょう。" },
     }
 };
 
@@ -613,6 +606,17 @@ ${stageData.content.split('【課題】')[1]}
             }
         }
     }
+
+    mainNav.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON') {
+            const viewName = e.target.dataset.view;
+            if (viewName) {
+                mainNav.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                renderView(viewName);
+            }
+        }
+    });
 
     // Initial render
     renderView('overview');
