@@ -3,285 +3,443 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>日本の金融業界 インタラクティブ分析レポート (Gemini AI搭載版) - Jimmy Kin</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>日本の金融業界分析 - Jimmy Kin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --bg-color: #f8fafc;
-            --text-color: #1e293b;
-            --card-bg: #ffffff;
+            --bg-color: #ffffff;
+            --text-color: #1a202c;
+            --text-light: #718096;
             --border-color: #e2e8f0;
-            --accent-color: #0369a1;
+            --accent-color: #3182ce;
+            --hover-bg: #f7fafc;
         }
 
         [data-theme="dark"] {
-            --bg-color: #0f172a;
-            --text-color: #f1f5f9;
-            --card-bg: #1e293b;
-            --border-color: #334155;
-            --accent-color: #38bdf8;
-        }
-
-        * {
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            --bg-color: #1a202c;
+            --text-color: #f7fafc;
+            --text-light: #a0aec0;
+            --border-color: #2d3748;
+            --accent-color: #63b3ed;
+            --hover-bg: #2d3748;
         }
 
         body {
-            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            line-height: 1.7;
-            letter-spacing: 0.01em;
+            line-height: 1.6;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .nav-button {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateY(0);
-        }
-        .nav-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px -2px rgba(59, 130, 246, 0.3);
-        }
-        .nav-button.active {
-            background-color: var(--accent-color);
-            color: white;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        /* Navigation */
+        .nav {
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
         }
 
-        .content-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            background-color: var(--card-bg);
+        .nav-container {
+            max-width: 768px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-color);
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 768px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .article-header {
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .article-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .article-meta {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Section Navigation */
+        .section-nav {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .section-btn {
+            background: none;
             border: 1px solid var(--border-color);
-        }
-        .content-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+            color: var(--text-light);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .flow-diagram-box {
-            transition: all 0.3s ease;
-            cursor: pointer;
-            background-color: var(--card-bg);
-            border-color: var(--border-color);
+        .section-btn:hover {
+            background: var(--hover-bg);
+            color: var(--text-color);
         }
-        .flow-diagram-box.active, .flow-diagram-box:hover {
-            background-color: #e0f2fe;
+
+        .section-btn.active {
+            background: var(--accent-color);
+            color: white;
             border-color: var(--accent-color);
+        }
+
+        /* Article Content */
+        .article-content {
+            padding: 2rem 0;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-color);
+        }
+
+        .section-text {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            background: var(--bg-color);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             transform: translateY(-2px);
+        }
+
+        .card-title {
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-content {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        /* Process Flow */
+        .process-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .process-step {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .process-step:hover, .process-step.active {
+            border-color: var(--accent-color);
+            background: var(--hover-bg);
+        }
+
+        .process-arrow {
+            color: var(--text-light);
+            font-size: 1.5rem;
+        }
+
+        .process-detail {
+            background: var(--hover-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+
+        /* Chart Container */
+        .chart-section {
+            background: var(--hover-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
         }
 
         .chart-container {
             position: relative;
-            width: 100%;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
             height: 400px;
-            max-height: 50vh;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 500px;
-            }
+            margin: 1.5rem 0;
         }
 
-        .modal-overlay {
+        .metric-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .metric-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .metric-btn:hover {
+            background: var(--hover-bg);
+            color: var(--text-color);
+        }
+
+        .metric-btn.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            background: var(--hover-bg);
+        }
+
+        /* Author Bio */
+        .author-bio {
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .author-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .author-description {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .social-link {
+            color: var(--text-light);
+            font-size: 1.125rem;
+            transition: color 0.2s ease;
+        }
+
+        .social-link:hover {
+            color: var(--accent-color);
+        }
+
+        /* Modal */
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.6);
+            background: rgba(0,0,0,0.5);
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 50;
+            z-index: 1000;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
         }
-        .modal-overlay.visible {
+
+        .modal.visible {
             opacity: 1;
             visibility: visible;
         }
+
         .modal-content {
-            background: var(--card-bg);
+            background: var(--bg-color);
+            border-radius: 8px;
             padding: 2rem;
-            border-radius: 1rem;
+            max-width: 600px;
             width: 90%;
-            max-width: 48rem;
             max-height: 80vh;
             overflow-y: auto;
-            transform: scale(0.95);
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-color);
         }
-        .modal-overlay.visible .modal-content {
-            transform: scale(1);
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .modal-close {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container, .main {
+                padding: 1rem;
+            }
+
+            .article-title {
+                font-size: 1.875rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .theme-toggle {
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .process-flow {
+                flex-direction: column;
+            }
+
+            .process-arrow {
+                transform: rotate(90deg);
+            }
         }
 
         .fade-in {
-            animation: fadeIn 0.6s ease-in-out;
+            animation: fadeIn 0.5s ease-out;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .spinner {
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(0,0,0,.1);
-            border-radius: 50%;
-            border-top-color: var(--accent-color);
-            animation: spin 1s ease-in-out infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Table of Contents Styles */
-        .toc-container {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 0.75rem;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        }
-        .toc-header {
-            background: linear-gradient(135deg, var(--accent-color), #0ea5e9);
-            color: white;
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        .toc-header:hover {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-        }
-        .toc-content {
-            padding: 1.5rem;
-            display: none;
-        }
-        .toc-content.show {
-            display: block;
-            animation: slideDown 0.3s ease-out;
-        }
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .toc-item {
-            display: block;
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-            border-radius: 0.5rem;
-            text-decoration: none;
-            color: var(--text-color);
-            background: transparent;
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-        .toc-item:hover {
-            background: var(--accent-color);
-            color: white;
-            transform: translateX(8px);
-        }
-
-        /* Theme Toggle Button */
-        .theme-toggle {
-            position: fixed;
-            top: 50%;
-            right: 2rem;
-            transform: translateY(-50%);
-            z-index: 1000;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            width: 3rem;
-            height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            transition: all 0.3s ease;
-        }
-        .theme-toggle:hover {
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-        }
-
-        /* Author Bio Styles */
-        .author-bio {
-            background: linear-gradient(135deg, var(--card-bg), #f8fafc);
-            border: 1px solid var(--border-color);
-            border-radius: 1rem;
-            padding: 2rem;
-            margin: 3rem 0;
-            text-align: center;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        }
-        [data-theme="dark"] .author-bio {
-            background: linear-gradient(135deg, var(--card-bg), #1e293b);
-        }
-        .author-avatar {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 50%;
-            border: 3px solid var(--accent-color);
-            margin: 0 auto 1rem;
-            background: linear-gradient(135deg, var(--accent-color), #0ea5e9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-            font-weight: bold;
-        }
-        .social-links a {
-            transition: all 0.3s ease;
-            transform: scale(1);
-        }
-        .social-links a:hover {
-            transform: scale(1.2);
-            color: var(--accent-color);
-        }
-
-        /* Enhanced Typography */
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Inter', 'Noto Sans JP', serif;
-            font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 1rem;
-        }
-        p {
-            margin-bottom: 1.25rem;
-            line-height: 1.8;
-        }
-
-        /* Responsive improvements */
-        @media (max-width: 768px) {
-            .theme-toggle {
-                right: 1rem;
-                width: 2.5rem;
-                height: 2.5rem;
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-            .toc-container {
-                margin: 1rem 0;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
@@ -291,120 +449,82 @@
     <!-- Visualization & Content Choices: 1. Financial Performance: Interactive Bar Chart (Chart.js) to compare key players across multiple metrics (revenue, profit) selected by the user. Goal: Compare. Justification: Dynamic comparison in a single component. 2. Operational Flow: Interactive Diagram (HTML/Tailwind) with clickable stages (Front/Middle/Back Office) that reveal detailed text. Goal: Organize/Explain. Justification: Visually intuitive and interactive alternative to static text; avoids SVG/Mermaid. 3. Transformation Drivers/Challenges: Interactive Cards (HTML/Tailwind) that expand/show modals on click. Goal: Inform. Justification: Breaks down text, encourages exploration. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
-    <div class="min-h-screen">
-        <header class="bg-white shadow-sm sticky top-0 z-40">
-            <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-                <!-- Main navigation -->
-                <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center space-x-4">
-                        <a href="/" class="text-2xl font-bold hover:text-sky-600 transition" style="color: var(--text-color);">JK</a>
-                        <div class="hidden sm:flex space-x-4">
-                            <a href="/" class="hover:opacity-75 transition" style="color: var(--text-color);">Home</a>
-                            <a href="/about.html" class="hover:opacity-75 transition" style="color: var(--text-color);">About</a>
-                            <a href="/posts/first-post.html" class="font-semibold" style="color: var(--accent-color);">Blog</a>
-                            <a href="https://github.com/JimmyKin" target="_blank" class="hover:opacity-75 transition" style="color: var(--text-color);">Projects</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Page title and content navigation -->
-                <div class="text-center">
-                    <h1 class="text-3xl font-bold mb-4" style="color: var(--text-color);">日本の金融業界 インタラクティブ分析</h1>
-                    
-                    <!-- Category navigation -->
-                    <nav id="main-nav" class="flex flex-wrap justify-center space-x-2 mb-4">
-                        <button data-view="overview" class="nav-button active font-semibold py-2 px-4 rounded-full text-sm sm:text-base">全体像</button>
-                        <button data-view="banking" class="nav-button font-semibold py-2 px-4 rounded-full text-sm sm:text-base">銀行</button>
-                        <button data-view="securities" class="nav-button font-semibold py-2 px-4 rounded-full text-sm sm:text-base">証券</button>
-                        <button data-view="insurance" class="nav-button font-semibold py-2 px-4 rounded-full text-sm sm:text-base">保険</button>
-                    </nav>
-                    
-                    <!-- Date and author -->
-                    <div class="text-sm" style="color: var(--text-color); opacity: 0.8;">
-                        <span class="date">2025年06月16日</span>
-                        <span class="mx-2">•</span>
-                        <span class="author">by Jimmy Kin</span>
-                    </div>
-                </div>
-                
-                <!-- Table of Contents -->
-                <div class="toc-container mt-8 max-w-4xl mx-auto">
-                    <div class="toc-header" onclick="toggleTOC()">
-                        <div class="flex items-center">
-                            <i class="fas fa-list-ul mr-2"></i>
-                            目次 (Table of Contents)
-                        </div>
-                        <i class="fas fa-chevron-down toc-chevron transition-transform duration-300"></i>
-                    </div>
-                    <div class="toc-content" id="toc-content">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <a href="#" class="toc-item" onclick="switchView('overview')">
-                                <i class="fas fa-chart-pie mr-2 text-blue-500"></i>
-                                全体像 - 金融ランドスケープの変革
-                            </a>
-                            <a href="#" class="toc-item" onclick="switchView('banking')">
-                                <i class="fas fa-university mr-2 text-green-500"></i>
-                                銀行 - 業界の現状と課題
-                            </a>
-                            <a href="#" class="toc-item" onclick="switchView('securities')">
-                                <i class="fas fa-chart-line mr-2 text-purple-500"></i>
-                                証券 - 市場変化への対応
-                            </a>
-                            <a href="#" class="toc-item" onclick="switchView('insurance')">
-                                <i class="fas fa-shield-alt mr-2 text-orange-500"></i>
-                                保険 - 人口動態の挑戦
-                            </a>
-                        </div>
-                    </div>
-                </div>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">JK</a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about.html" class="nav-link">About</a>
+                <a href="/posts/first-post.html" class="nav-link active">Blog</a>
+                <a href="https://github.com/JimmyKin" target="_blank" class="nav-link">Projects</a>
             </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Article Header -->
+        <header class="article-header">
+            <h1 class="article-title">日本の金融業界分析</h1>
+            <div class="article-meta">
+                2025年06月16日 • by Jimmy Kin
+            </div>
+            
+            <!-- Section Navigation -->
+            <nav class="section-nav" id="section-nav">
+                <button class="section-btn active" data-view="overview">全体像</button>
+                <button class="section-btn" data-view="banking">銀行</button>
+                <button class="section-btn" data-view="securities">証券</button>
+                <button class="section-btn" data-view="insurance">保険</button>
+            </nav>
         </header>
 
-        <main id="app-content" class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <!-- Article Content -->
+        <article class="article-content" id="article-content">
             <!-- Content will be rendered here by JavaScript -->
-        </main>
-        
+        </article>
+
         <!-- Author Bio -->
-        <div class="author-bio max-w-4xl mx-auto">
-            <div class="author-avatar">JK</div>
-            <h3 class="text-xl font-bold mb-2" style="color: var(--text-color);">Jimmy Kin</h3>
-            <p class="text-base mb-4" style="color: var(--text-color); opacity: 0.8;">
-                テクノロジーとイノベーションの熱心な支持者として、金融業界のデジタル変革と市場動向に深い関心を持っています。<br>
-                データ分析とインタラクティブな可視化を通じて、複雑な金融トピックを分かりやすく解説することを目指しています。
-            </p>
-            <div class="social-links flex justify-center space-x-4">
-                <a href="https://github.com/JimmyKin" target="_blank" class="text-2xl hover:scale-110 transition-transform" title="GitHub">
+        <footer class="author-bio">
+            <div class="author-name">Jimmy Kin</div>
+            <div class="author-description">
+                テクノロジーとイノベーションの熱心な支持者として、金融業界のデジタル変革と市場動向の分析に取り組んでいます。
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/JimmyKin" target="_blank" class="social-link" title="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="#" class="text-2xl hover:scale-110 transition-transform" title="Twitter">
+                <a href="#" class="social-link" title="Twitter">
                     <i class="fab fa-twitter"></i>
                 </a>
-                <a href="#" class="text-2xl hover:scale-110 transition-transform" title="LinkedIn">
+                <a href="#" class="social-link" title="LinkedIn">
                     <i class="fab fa-linkedin"></i>
                 </a>
             </div>
-        </div>
-    </div>
-    
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">
-        <i class="fas fa-moon theme-icon" id="theme-icon"></i>
+        </footer>
+    </main>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="テーマを切り替え">
+        <i class="fas fa-moon" id="theme-icon"></i>
     </button>
 
-    <!-- Modal Structure -->
-    <div id="modal" class="modal-overlay">
+    <!-- Modal -->
+    <div id="modal" class="modal">
         <div class="modal-content">
-            <h2 id="modal-title" class="text-2xl font-bold mb-4 text-slate-800"></h2>
-            <div id="modal-body" class="prose max-w-none text-slate-600"></div>
-            <button id="modal-close" class="mt-6 bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition">閉じる</button>
+            <h2 id="modal-title" class="modal-title"></h2>
+            <div id="modal-body"></div>
+            <button id="modal-close" class="modal-close">閉じる</button>
         </div>
     </div>
 
     <script>
+// Data structure for the report
 const reportData = {
     overview: {
-        title: "日本の金融ランドスケープの変革：包括的分析",
-        intro: "日本の金融機関は重大な転換点に立っており、ビジネスモデルと業務パラダイムの根本的な再創造を迫る「三重の挑戦」に直面しています。第一に、2024年3月の日本銀行による数十年にわたるデフレ政策からの脱却により金利環境が一変し、収益性向上の機会と、ゼロ金利時代に構築されたポートフォリオの管理に伴う重大なリスクの両方が生まれています。第二に、「2025年の崖」が象徴するデジタルトランスフォーメーション（DX）の必要性が極めて緊急性の高い段階に達しています。第三に、超高齢化と人口減少という深刻な人口動態の変化が、すべてのセクターに不可避の圧力をかけています。",
+        title: "金融ランドスケープの変革",
+        intro: "日本の金融機関は重大な転換点に立っており、ビジネスモデルと業務パラダイムの根本的な再創造を迫る「三重の挑戦」に直面しています。",
         sections: [
             { 
                 title: "業界変革の主要因",
@@ -690,16 +810,18 @@ const reportData = {
     }
 };
 
+// Main application initialization
 document.addEventListener('DOMContentLoaded', () => {
-    const appContent = document.getElementById('app-content');
-    const mainNav = document.getElementById('main-nav');
+    const articleContent = document.getElementById('article-content');
+    const sectionNav = document.getElementById('section-nav');
     const modal = document.getElementById('modal');
     const modalTitle = document.getElementById('modal-title');
     const modalBody = document.getElementById('modal-body');
     const modalClose = document.getElementById('modal-close');
-    let financialChart = null;
-    let currentFlowStage = 'front';
-    let currentViewName = 'overview';
+    
+    let currentChart = null;
+    let currentView = 'overview';
+    let currentStage = 'front';
 
     function formatText(text) {
         return text.replace(/\n/g, '<br>');
@@ -725,51 +847,62 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function createOverviewView() {
-        const viewData = reportData.overview;
-        let html = `<div class="fade-in">
-            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl" style="color: var(--text-color);">${viewData.title}</h2>
-            <p class="mt-4 text-lg leading-8" style="color: var(--text-color); opacity: 0.8;">${viewData.intro}</p>`;
+        const data = reportData.overview;
+        let html = `
+            <div class="content-section fade-in">
+                <h2 class="section-title">${data.title}</h2>
+                <p class="section-text">${data.intro}</p>
+            </div>
+        `;
 
-        viewData.sections.forEach(section => {
-            html += `<div class="mt-12">
-                <h3 class="text-2xl font-bold text-slate-800">${section.title}</h3>`;
+        data.sections.forEach(section => {
+            html += `<div class="content-section">
+                <h3 class="section-subtitle">${section.title}</h3>`;
+            
             if (section.intro) {
-                html += `<p class="mt-2 text-slate-600">${section.intro}</p>`;
+                html += `<p class="section-text">${section.intro}</p>`;
             }
 
             if (section.type === 'cards') {
-                html += `<div class="mt-6 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">`;
+                html += `<div class="card-grid">`;
                 section.items.forEach(item => {
-                    html += `<div class="content-card bg-white rounded-xl shadow-md p-6" data-modal-id="${item.id}">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 text-2xl">${item.icon}</div>
-                        <h4 class="mt-4 text-lg font-semibold text-slate-900">${item.title}</h4>
-                        <p class="mt-2 text-sm text-slate-600">${item.content}</p>
-                    </div>`;
+                    html += `
+                        <div class="card" data-modal-id="${item.id}">
+                            <div class="card-title">
+                                <span style="font-size: 1.5rem;">${item.icon}</span>
+                                ${item.title}
+                            </div>
+                            <div class="card-content">${item.content}</div>
+                        </div>
+                    `;
                 });
                 html += `</div>`;
             } else if (section.type === 'list') {
-                html += `<div class="mt-6 space-y-4">`;
                 section.items.forEach(item => {
-                    html += `<div class="bg-white rounded-lg shadow-sm p-4">
-                        <h4 class="font-semibold text-slate-800">${item.title}</h4>
-                        <p class="text-sm text-slate-600">${item.content}</p>
-                    </div>`;
+                    html += `
+                        <div class="content-section">
+                            <h4 class="section-subtitle" style="font-size: 1.125rem;">${item.title}</h4>
+                            <p class="section-text">${item.content}</p>
+                        </div>
+                    `;
                 });
-                html += `</div>`;
             }
             html += `</div>`;
         });
-        html += `</div>`;
+
         return html;
     }
     
-    function createFinancialChart(data) {
-        const ctx = document.getElementById('financialChartCanvas').getContext('2d');
-        if (financialChart) {
-            financialChart.destroy();
+    function createChart(data) {
+        const canvas = document.getElementById('chart-canvas');
+        if (!canvas) return;
+        
+        const ctx = canvas.getContext('2d');
+        if (currentChart) {
+            currentChart.destroy();
         }
         
-        financialChart = new Chart(ctx, {
+        currentChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: data.labels,
@@ -779,58 +912,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null) {
-                                    label += context.parsed.y + ' 兆円';
-                                }
-                                return label;
-                            }
-                        }
-                    }
+                    legend: { display: false }
                 },
                 scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: data.datasets[0].label
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            callback: function(value, index, ticks) {
-                                const label = this.getLabelForValue(value);
-                                return label.length > 10 ? label.substring(0, 10) + '...' : label;
-                            }
-                        }
-                    }
+                    y: { beginAtZero: true }
                 }
             }
         });
         
-        const metricButtons = document.getElementById('metric-selector');
-        metricButtons.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON') {
-                const metricIndex = e.target.dataset.metric;
-                const newDataset = data.datasets[metricIndex];
-                
-                financialChart.data.datasets[0] = newDataset;
-                financialChart.options.scales.y.title.text = newDataset.label;
-                financialChart.update();
-                
-                metricButtons.querySelectorAll('button').forEach(btn => btn.classList.remove('bg-sky-600', 'text-white'));
-                e.target.classList.add('bg-sky-600', 'text-white');
-            }
-        });
+        // Add metric switching functionality
+        const container = canvas.closest('.chart-section');
+        if (container) {
+            container.addEventListener('click', (e) => {
+                if (e.target.classList.contains('metric-btn')) {
+                    const index = e.target.dataset.metric;
+                    if (data.datasets[index]) {
+                        currentChart.data.datasets[0] = data.datasets[index];
+                        currentChart.update();
+                        
+                        container.querySelectorAll('.metric-btn').forEach(btn => 
+                            btn.classList.remove('active'));
+                        e.target.classList.add('active');
+                    }
+                }
+            });
+        }
     }
 
     function updateAiSolutions(viewName, stageId) {
@@ -855,210 +961,166 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createSectorView(viewName) {
-        currentViewName = viewName;
-        currentFlowStage = 'front'; // Reset to default stage
-        const viewData = reportData[viewName];
-        let html = `<div class="fade-in">
-            <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">${viewData.title}</h2>
-            <p class="mt-4 text-lg leading-8 text-slate-600">${viewData.intro}</p>`;
+        currentView = viewName;
+        currentStage = 'front';
+        const data = reportData[viewName];
+        
+        let html = `
+            <div class="content-section fade-in">
+                <h2 class="section-title">${data.title}</h2>
+                <p class="section-text">${data.intro}</p>
+            </div>
+        `;
+        
+        // Operational Flow
+        if (data.operationalFlow) {
+            const flow = data.operationalFlow;
+            html += `
+                <div class="content-section">
+                    <h3 class="section-subtitle">${flow.title}</h3>
+                    <p class="section-text">${flow.intro}</p>
+                    
+                    <div class="process-flow">`;
             
-        if(viewData.operationalFlow) {
-            const flowData = viewData.operationalFlow;
-            html += `<div class="mt-12">
-                <h3 class="text-2xl font-bold text-slate-800">${flowData.title}</h3>
-                <p class="mt-2 text-slate-600">${flowData.intro}</p>
-                <div class="mt-6 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">`;
-            
-            flowData.stages.forEach((stage, index) => {
-                html += `<div class="flow-diagram-box w-full md:w-1/3 border-2 border-slate-300 rounded-lg p-4 text-center" data-stage="${stage.id}">
-                    <h4 class="font-semibold text-slate-900">${stage.name}</h4>
-                </div>`;
-                if (index < flowData.stages.length - 1) {
-                    html += `<div class="text-3xl text-slate-400 transform rotate-90 md:rotate-0">→</div>`;
+            flow.stages.forEach((stage, index) => {
+                html += `
+                    <div class="process-step" data-stage="${stage.id}">
+                        <strong>${stage.name}</strong>
+                    </div>
+                `;
+                if (index < flow.stages.length - 1) {
+                    html += `<div class="process-arrow">→</div>`;
                 }
             });
-
-            html += `</div>
-            <div id="flow-detail" class="mt-4 bg-sky-50 p-6 rounded-lg min-h-[100px] text-slate-700 whitespace-pre-wrap">
-                ${formatText(flowData.stages[0].content)}
-            </div>
             
-            <div id="ai-solutions-section" class="mt-6 bg-gradient-to-r from-sky-50 to-indigo-50 p-6 rounded-xl shadow-md">
-                <h4 class="text-lg font-bold text-slate-800 mb-4 flex items-center">
-                    <span class="text-2xl mr-2">✨</span>
-                    AIによる解決策の提案
-                </h4>
-                <div id="ai-solutions-content" class="prose prose-sm max-w-none text-slate-700">
-                    <!-- Content will be populated based on selected stage -->
+            html += `
+                    </div>
+                    <div class="process-detail" id="process-detail">
+                        ${formatText(flow.stages[0].content)}
+                    </div>
                 </div>
-            </div>
-            </div>`;
+            `;
         }
         
-        if(viewData.financials) {
-            const finData = viewData.financials;
-            html += `<div class="mt-12 bg-white p-6 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-slate-800">${finData.title}</h3>
-                <p class="mt-2 text-slate-600">${finData.intro}</p>
-                <div id="metric-selector" class="my-4 flex flex-wrap gap-2">`;
-            finData.data.datasets.forEach((dataset, index) => {
-                const isActive = index === 0 ? 'bg-sky-600 text-white' : 'bg-slate-200 text-slate-700';
-                html += `<button data-metric="${index}" class="${isActive} font-semibold py-2 px-4 rounded-full text-sm transition hover:bg-sky-500 hover:text-white">${dataset.label.split(' ')[0]}</button>`;
+        // Financial Data
+        if (data.financials) {
+            const fin = data.financials;
+            html += `
+                <div class="chart-section">
+                    <h3 class="section-subtitle">${fin.title}</h3>
+                    <p class="section-text">${fin.intro}</p>
+                    
+                    <div class="metric-buttons">`;
+            
+            fin.data.datasets.forEach((dataset, index) => {
+                const active = index === 0 ? 'active' : '';
+                html += `
+                    <button class="metric-btn ${active}" data-metric="${index}">
+                        ${dataset.label.split(' ')[0]}
+                    </button>
+                `;
             });
             
-            html +=`</div>
-                <div class="chart-container">
-                    <canvas id="financialChartCanvas"></canvas>
+            html += `
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart-canvas"></canvas>
+                    </div>
                 </div>
-            </div>`;
+            `;
         }
-
-        html += `</div>`;
+        
         return html;
     }
     
     function renderView(viewName) {
-        let contentHtml = '';
-        if (viewName === 'overview') {
-            currentViewName = 'overview';
-            contentHtml = createOverviewView();
-        } else {
-            contentHtml = createSectorView(viewName);
-        }
-        appContent.innerHTML = contentHtml;
+        currentView = viewName;
+        let html = '';
         
-        // Add event listeners for the newly created content
         if (viewName === 'overview') {
-            appContent.querySelectorAll('.content-card').forEach(card => {
-                card.addEventListener('click', () => showModal(card.dataset.modalId));
+            html = createOverviewView();
+        } else {
+            html = createSectorView(viewName);
+        }
+        
+        articleContent.innerHTML = html;
+        
+        // Add event listeners
+        if (viewName === 'overview') {
+            // Card click handlers for modals
+            articleContent.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const modalId = card.dataset.modalId;
+                    if (modalId) showModal(modalId);
+                });
             });
         } else {
-            if(reportData[viewName].financials) {
-                createFinancialChart(reportData[viewName].financials.data);
-            }
-            if(reportData[viewName].operationalFlow) {
-                const flowBoxes = appContent.querySelectorAll('.flow-diagram-box');
-                const flowDetail = appContent.querySelector('#flow-detail');
+            // Process flow interaction
+            const processSteps = articleContent.querySelectorAll('.process-step');
+            const processDetail = articleContent.querySelector('#process-detail');
+            
+            if (processSteps.length > 0) {
+                processSteps[0].classList.add('active');
                 
-                flowBoxes[0].classList.add('active');
-                
-                // Initialize AI solutions for the first stage
-                updateAiSolutions(viewName, currentFlowStage);
-
-                flowBoxes.forEach(box => {
-                    box.addEventListener('click', () => {
-                        flowBoxes.forEach(b => b.classList.remove('active'));
-                        box.classList.add('active');
-                        currentFlowStage = box.dataset.stage;
-                        const stageData = reportData[viewName].operationalFlow.stages.find(s => s.id === currentFlowStage);
-                        flowDetail.innerHTML = formatText(stageData.content);
+                processSteps.forEach(step => {
+                    step.addEventListener('click', () => {
+                        processSteps.forEach(s => s.classList.remove('active'));
+                        step.classList.add('active');
                         
-                        // Update AI solutions for the selected stage
-                        updateAiSolutions(viewName, currentFlowStage);
+                        const stageId = step.dataset.stage;
+                        const stageData = reportData[currentView].operationalFlow.stages
+                            .find(s => s.id === stageId);
+                        
+                        if (stageData && processDetail) {
+                            processDetail.innerHTML = formatText(stageData.content);
+                        }
                     });
                 });
+            }
+            
+            // Chart rendering
+            if (reportData[viewName].financials) {
+                createChart(reportData[viewName].financials.data);
             }
         }
     }
 
-    mainNav.addEventListener('click', (e) => {
-        if (e.target.tagName === 'BUTTON') {
+    // Navigation event handler
+    sectionNav.addEventListener('click', (e) => {
+        if (e.target.classList.contains('section-btn')) {
             const viewName = e.target.dataset.view;
             if (viewName) {
-                mainNav.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                sectionNav.querySelectorAll('.section-btn').forEach(btn => 
+                    btn.classList.remove('active'));
                 e.target.classList.add('active');
                 renderView(viewName);
             }
         }
     });
 
-    // Initial render
+    // Initialize
     renderView('overview');
 });
 
-// Theme Toggle Function
+// Theme functionality
 function toggleTheme() {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    const themeIcon = document.getElementById('theme-icon');
+    const current = document.documentElement.getAttribute('data-theme');
+    const newTheme = current === 'dark' ? 'light' : 'dark';
+    const icon = document.getElementById('theme-icon');
     
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     
-    // Update icon
-    if (newTheme === 'dark') {
-        themeIcon.className = 'fas fa-sun theme-icon';
-    } else {
-        themeIcon.className = 'fas fa-moon theme-icon';
-    }
+    icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 }
 
-// Table of Contents Toggle
-function toggleTOC() {
-    const tocContent = document.getElementById('toc-content');
-    const chevron = document.querySelector('.toc-chevron');
-    
-    if (tocContent.classList.contains('show')) {
-        tocContent.classList.remove('show');
-        chevron.style.transform = 'rotate(0deg)';
-    } else {
-        tocContent.classList.add('show');
-        chevron.style.transform = 'rotate(180deg)';
-    }
-}
-
-// Switch View Function for TOC
-function switchView(viewName) {
-    // Close TOC
-    const tocContent = document.getElementById('toc-content');
-    const chevron = document.querySelector('.toc-chevron');
-    tocContent.classList.remove('show');
-    chevron.style.transform = 'rotate(0deg)';
-    
-    // Switch to the selected view
-    const mainNav = document.getElementById('main-nav');
-    const targetButton = mainNav.querySelector(`[data-view="${viewName}"]`);
-    if (targetButton) {
-        mainNav.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-        targetButton.classList.add('active');
-        renderView(viewName);
-        
-        // Smooth scroll to content
-        document.getElementById('app-content').scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start' 
-        });
-    }
-}
-
-// Initialize theme on page load
+// Initialize theme
 document.addEventListener('DOMContentLoaded', function() {
     const savedTheme = localStorage.getItem('theme') || 'light';
-    const themeIcon = document.getElementById('theme-icon');
+    const icon = document.getElementById('theme-icon');
     
     document.documentElement.setAttribute('data-theme', savedTheme);
-    
-    if (savedTheme === 'dark') {
-        themeIcon.className = 'fas fa-sun theme-icon';
-    } else {
-        themeIcon.className = 'fas fa-moon theme-icon';
-    }
-});
-
-// Enhanced scroll-to-top functionality
-let scrollTimeout;
-window.addEventListener('scroll', function() {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const themeToggle = document.querySelector('.theme-toggle');
-        
-        if (scrollTop > 200) {
-            themeToggle.style.opacity = '0.8';
-        } else {
-            themeToggle.style.opacity = '1';
-        }
-    }, 100);
+    icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 });
     </script>
 </body>
