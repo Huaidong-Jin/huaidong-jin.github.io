@@ -12,39 +12,75 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --accent-color: #0369a1;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-color: #f1f5f9;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --accent-color: #38bdf8;
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
         body {
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            letter-spacing: 0.01em;
         }
+
         .nav-button {
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px -2px rgba(59, 130, 246, 0.3);
         }
         .nav-button.active {
-            background-color: #0369a1;
+            background-color: var(--accent-color);
             color: white;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
+
         .content-card {
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
         }
         .content-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
         }
+
         .flow-diagram-box {
             transition: all 0.3s ease;
             cursor: pointer;
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
         }
         .flow-diagram-box.active, .flow-diagram-box:hover {
             background-color: #e0f2fe;
-            border-color: #0369a1;
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
         }
+
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             margin-left: auto;
             margin-right: auto;
             height: 400px;
@@ -52,16 +88,17 @@
         }
         @media (min-width: 768px) {
             .chart-container {
-                height: 450px;
+                height: 500px;
             }
         }
+
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.6);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -69,42 +106,183 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
         }
         .modal-overlay.visible {
             opacity: 1;
             visibility: visible;
         }
         .modal-content {
-            background: white;
+            background: var(--card-bg);
             padding: 2rem;
-            border-radius: 0.5rem;
+            border-radius: 1rem;
             width: 90%;
             max-width: 48rem;
             max-height: 80vh;
             overflow-y: auto;
             transform: scale(0.95);
             transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
         }
         .modal-overlay.visible .modal-content {
             transform: scale(1);
         }
+
         .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn 0.6s ease-in-out;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         .spinner {
             width: 24px;
             height: 24px;
             border: 3px solid rgba(0,0,0,.1);
             border-radius: 50%;
-            border-top-color: #0369a1;
+            border-top-color: var(--accent-color);
             animation: spin 1s ease-in-out infinite;
         }
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        /* Table of Contents Styles */
+        .toc-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        .toc-header {
+            background: linear-gradient(135deg, var(--accent-color), #0ea5e9);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .toc-header:hover {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+        }
+        .toc-content {
+            padding: 1.5rem;
+            display: none;
+        }
+        .toc-content.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .toc-item {
+            display: block;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            color: var(--text-color);
+            background: transparent;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .toc-item:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: translateX(8px);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        /* Author Bio Styles */
+        .author-bio {
+            background: linear-gradient(135deg, var(--card-bg), #f8fafc);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] .author-bio {
+            background: linear-gradient(135deg, var(--card-bg), #1e293b);
+        }
+        .author-avatar {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            border: 3px solid var(--accent-color);
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--accent-color), #0ea5e9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+        .social-links a {
+            transition: all 0.3s ease;
+            transform: scale(1);
+        }
+        .social-links a:hover {
+            transform: scale(1.2);
+            color: var(--accent-color);
+        }
+
+        /* Enhanced Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Inter', 'Noto Sans JP', serif;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+            line-height: 1.8;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .theme-toggle {
+                right: 1rem;
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+            .toc-container {
+                margin: 1rem 0;
+            }
         }
     </style>
 </head>
@@ -119,19 +297,19 @@
                 <!-- Main navigation -->
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center space-x-4">
-                        <a href="/" class="text-2xl font-bold text-slate-900 hover:text-sky-600 transition">JK</a>
+                        <a href="/" class="text-2xl font-bold hover:text-sky-600 transition" style="color: var(--text-color);">JK</a>
                         <div class="hidden sm:flex space-x-4">
-                            <a href="/" class="text-slate-600 hover:text-slate-900 transition">Home</a>
-                            <a href="/about.html" class="text-slate-600 hover:text-slate-900 transition">About</a>
-                            <a href="/posts/first-post.html" class="text-sky-600 font-semibold">Blog</a>
-                            <a href="https://github.com/JimmyKin" target="_blank" class="text-slate-600 hover:text-slate-900 transition">Projects</a>
+                            <a href="/" class="hover:opacity-75 transition" style="color: var(--text-color);">Home</a>
+                            <a href="/about.html" class="hover:opacity-75 transition" style="color: var(--text-color);">About</a>
+                            <a href="/posts/first-post.html" class="font-semibold" style="color: var(--accent-color);">Blog</a>
+                            <a href="https://github.com/JimmyKin" target="_blank" class="hover:opacity-75 transition" style="color: var(--text-color);">Projects</a>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Page title and content navigation -->
                 <div class="text-center">
-                    <h1 class="text-3xl font-bold text-slate-900 mb-4">日本の金融業界 インタラクティブ分析</h1>
+                    <h1 class="text-3xl font-bold mb-4" style="color: var(--text-color);">日本の金融業界 インタラクティブ分析</h1>
                     
                     <!-- Category navigation -->
                     <nav id="main-nav" class="flex flex-wrap justify-center space-x-2 mb-4">
@@ -142,10 +320,41 @@
                     </nav>
                     
                     <!-- Date and author -->
-                    <div class="text-sm text-slate-600">
+                    <div class="text-sm" style="color: var(--text-color); opacity: 0.8;">
                         <span class="date">2025年06月16日</span>
                         <span class="mx-2">•</span>
                         <span class="author">by Jimmy Kin</span>
+                    </div>
+                </div>
+                
+                <!-- Table of Contents -->
+                <div class="toc-container mt-8 max-w-4xl mx-auto">
+                    <div class="toc-header" onclick="toggleTOC()">
+                        <div class="flex items-center">
+                            <i class="fas fa-list-ul mr-2"></i>
+                            目次 (Table of Contents)
+                        </div>
+                        <i class="fas fa-chevron-down toc-chevron transition-transform duration-300"></i>
+                    </div>
+                    <div class="toc-content" id="toc-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <a href="#" class="toc-item" onclick="switchView('overview')">
+                                <i class="fas fa-chart-pie mr-2 text-blue-500"></i>
+                                全体像 - 金融ランドスケープの変革
+                            </a>
+                            <a href="#" class="toc-item" onclick="switchView('banking')">
+                                <i class="fas fa-university mr-2 text-green-500"></i>
+                                銀行 - 業界の現状と課題
+                            </a>
+                            <a href="#" class="toc-item" onclick="switchView('securities')">
+                                <i class="fas fa-chart-line mr-2 text-purple-500"></i>
+                                証券 - 市場変化への対応
+                            </a>
+                            <a href="#" class="toc-item" onclick="switchView('insurance')">
+                                <i class="fas fa-shield-alt mr-2 text-orange-500"></i>
+                                保険 - 人口動態の挑戦
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -154,7 +363,33 @@
         <main id="app-content" class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
             <!-- Content will be rendered here by JavaScript -->
         </main>
+        
+        <!-- Author Bio -->
+        <div class="author-bio max-w-4xl mx-auto">
+            <div class="author-avatar">JK</div>
+            <h3 class="text-xl font-bold mb-2" style="color: var(--text-color);">Jimmy Kin</h3>
+            <p class="text-base mb-4" style="color: var(--text-color); opacity: 0.8;">
+                テクノロジーとイノベーションの熱心な支持者として、金融業界のデジタル変革と市場動向に深い関心を持っています。<br>
+                データ分析とインタラクティブな可視化を通じて、複雑な金融トピックを分かりやすく解説することを目指しています。
+            </p>
+            <div class="social-links flex justify-center space-x-4">
+                <a href="https://github.com/JimmyKin" target="_blank" class="text-2xl hover:scale-110 transition-transform" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="text-2xl hover:scale-110 transition-transform" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="text-2xl hover:scale-110 transition-transform" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
     </div>
+    
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">
+        <i class="fas fa-moon theme-icon" id="theme-icon"></i>
+    </button>
 
     <!-- Modal Structure -->
     <div id="modal" class="modal-overlay">
@@ -492,8 +727,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function createOverviewView() {
         const viewData = reportData.overview;
         let html = `<div class="fade-in">
-            <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">${viewData.title}</h2>
-            <p class="mt-4 text-lg leading-8 text-slate-600">${viewData.intro}</p>`;
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl" style="color: var(--text-color);">${viewData.title}</h2>
+            <p class="mt-4 text-lg leading-8" style="color: var(--text-color); opacity: 0.8;">${viewData.intro}</p>`;
 
         viewData.sections.forEach(section => {
             html += `<div class="mt-12">
@@ -739,6 +974,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial render
     renderView('overview');
+});
+
+// Theme Toggle Function
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    const themeIcon = document.getElementById('theme-icon');
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    // Update icon
+    if (newTheme === 'dark') {
+        themeIcon.className = 'fas fa-sun theme-icon';
+    } else {
+        themeIcon.className = 'fas fa-moon theme-icon';
+    }
+}
+
+// Table of Contents Toggle
+function toggleTOC() {
+    const tocContent = document.getElementById('toc-content');
+    const chevron = document.querySelector('.toc-chevron');
+    
+    if (tocContent.classList.contains('show')) {
+        tocContent.classList.remove('show');
+        chevron.style.transform = 'rotate(0deg)';
+    } else {
+        tocContent.classList.add('show');
+        chevron.style.transform = 'rotate(180deg)';
+    }
+}
+
+// Switch View Function for TOC
+function switchView(viewName) {
+    // Close TOC
+    const tocContent = document.getElementById('toc-content');
+    const chevron = document.querySelector('.toc-chevron');
+    tocContent.classList.remove('show');
+    chevron.style.transform = 'rotate(0deg)';
+    
+    // Switch to the selected view
+    const mainNav = document.getElementById('main-nav');
+    const targetButton = mainNav.querySelector(`[data-view="${viewName}"]`);
+    if (targetButton) {
+        mainNav.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+        targetButton.classList.add('active');
+        renderView(viewName);
+        
+        // Smooth scroll to content
+        document.getElementById('app-content').scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
+    }
+}
+
+// Initialize theme on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    const themeIcon = document.getElementById('theme-icon');
+    
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    
+    if (savedTheme === 'dark') {
+        themeIcon.className = 'fas fa-sun theme-icon';
+    } else {
+        themeIcon.className = 'fas fa-moon theme-icon';
+    }
+});
+
+// Enhanced scroll-to-top functionality
+let scrollTimeout;
+window.addEventListener('scroll', function() {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const themeToggle = document.querySelector('.theme-toggle');
+        
+        if (scrollTop > 200) {
+            themeToggle.style.opacity = '0.8';
+        } else {
+            themeToggle.style.opacity = '1';
+        }
+    }, 100);
 });
     </script>
 </body>
