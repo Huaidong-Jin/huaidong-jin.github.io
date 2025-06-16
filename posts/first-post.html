@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本の金融業界 インタラクティブ分析レポート - Huaidong Jin</title>
+    <link rel="stylesheet" href="/jimmykin-website/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .nav-button {
+            transition: all 0.3s ease;
+        }
+        .nav-button.active {
+            background-color: #0369a1;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .content-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .flow-diagram-box {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .flow-diagram-box.active, .flow-diagram-box:hover {
+            background-color: #e0f2fe;
+            border-color: #0369a1;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 48rem;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.visible .modal-content {
+            transform: scale(1);
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(0,0,0,.1);
+            border-radius: 50%;
+            border-top-color: #0369a1;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    <a href="/jimmykin-website/">HJ</a>
+                </div>
+                <div class="nav-links">
+                    <a href="/jimmykin-website/">Home</a>
+                    <a href="/jimmykin-website/about.html">About</a>
+                    <a href="/jimmykin-website/posts/first-post.html" class="active">Blog</a>
+                    <a href="https://github.com/JimmyKin" target="_blank">Projects</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="post-content">
+            <article>
+                <h1>日本の金融業界 インタラクティブ分析レポート</h1>
+                <div class="post-meta">
+                    <span class="date">2024年3月20日</span>
+                    <span class="author">by Huaidong Jin</span>
+                </div>
+                
+                <div class="content">
+                    <div id="main-nav" class="flex flex-wrap justify-center space-x-2 mb-8">
+                        <button data-view="overview" class="nav-button active font-semibold py-2 px-4 rounded-full text-sm sm:text-base">全体像</button>
+                        <button data-view="banking" class="nav-button font-semibold py-2 px-4 rounded-full text-sm sm:text-base">銀行</button>
+                        <button data-view="securities" class="nav-button font-semibold py-2 px-4 rounded-full text-sm sm:text-base">証券</button>
+                        <button data-view="insurance" class="nav-button font-semibold py-2 px-4 rounded-full text-sm sm:text-base">保険</button>
+                    </div>
+                    <div id="app-content" class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+                        <!-- Content will be rendered here by JavaScript -->
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <footer>
+            <div class="social-links">
+                <a href="https://github.com/JimmyKin" target="_blank" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+            <p>© 2024 Huaidong Jin. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 id="modal-title" class="text-2xl font-bold mb-4 text-slate-800"></h2>
+            <div id="modal-body" class="prose max-w-none text-slate-600"></div>
+            <button id="modal-close" class="mt-6 bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition">閉じる</button>
+        </div>
+    </div>
+
+    <script>
+const reportData = {
+    overview: {
+        title: "日本の金融ランドスケープの変革",
+        intro: "日本の金融機関は、金利環境の変化、デジタルトランスフォーメーション（DX）の緊急性、そして深刻な人口動態の変化という「三重の挑戦」に直面し、ビジネスモデルの根本的な再創造を迫られています。このセクションでは、業界全体を動かす変革の力、共通の課題、そして未来の展望を探ります。",
+        sections: [
+            { 
+                title: "業界変革の主要因",
+                type: 'cards',
+                items: [
+                    { id: 'dx', title: 'DXの緊急性', icon: '💻', content: "「2025年の崖」が象徴するように、老朽化したレガシーシステムの存在は、競争力だけでなく業務安定性をも脅かす最大の課題です。多くの金融機関はハイブリッドクラウド戦略を採用し、段階的な近代化を進めていますが、技術的負債の克服は依然として大きな挑戦です。" },
+                    { id: 'fintech', title: 'フィンテックとの連携', icon: '🤝', content: "日本のフィンテックエコシステムは、既存金融機関との「協調」を特徴としています。これにより安定したイノベーションが可能になる一方、破壊的な変革が生まれにくいという側面もあります。決済、ロボアドバイザーなどの分野で革新が進んでいます。" },
+                    { id: 'regulation', title: '新たな金融政策と規制', icon: '⚖️', content: "2024年3月のマイナス金利政策解除は、金融業界にとって数十年来の大きな転換点です。収益機会が生まれる一方、低金利時代に蓄積されたリスクの管理が重要になります。また、政府は「貯蓄から投資へ」を促すNISA拡充などを推進しています。" },
+                    { id: 'esg', title: 'ESG経営の浸透', icon: '🌿', content: "日本のESGは、倫理的な側面だけでなく、国の経済戦略として推進されています。世界最大の年金基金であるGPIFの動きに牽引され、グリーンボンドやサステナビリティ・リンク・ローンなど、ESG関連の金融商品が主流になりつつあります。" }
+                ]
+            },
+            {
+                title: "業界全体の重要な課題",
+                type: 'list',
+                intro: '各業界に共通する課題は、従来のプロダクト販売・取引処理中心のビジネスモデルから、顧客中心の関係ベースのアドバイザリーモデルへと転換することの難しさに集約されます。',
+                items: [
+                    { title: "銀行: 低金利環境の長期化とデジタル競争の激化", content: "収益性の高い国内事業の構築、フィンテックやネオバンクとの競争、そしてレガシーシステムの維持管理という三重苦に直面しています。" },
+                    { title: "証券: 手数料収入の減少と投資家層の変化", content: "手数料ゼロ化の波により、従来の収益モデルが崩壊しつつあります。NISAで市場に参入した新しいデジタルネイティブ世代のニーズに応える必要があります。" },
+                    { title: "保険: 人口動態の変化と収益性への圧力", content: "超高齢化・人口減少は、保険商品の需要と支払いの両面に大きな影響を与えます。インシュアテック企業との競争も激化しています。" }
+                ]
+            },
+            {
+                title: "将来展望と戦略的提言",
+                type: 'cards',
+                items: [
+                    { id: 'embedded', title: 'Embedded Finance (組込型金融)', icon: '🧩', content: "金融サービスは、非金融プラットフォームにシームレスに組み込まれ、ますます「見えない」存在になります。BaaS（Banking-as-a-Service）モデルが主流となり、新たな収益機会が生まれます。" },
+                    { id: 'personalization', title: 'ハイパー・パーソナライゼーション', icon: '🎯', content: "データとAIを駆使し、個々の顧客に合わせたアドバイスや商品をリアルタイムで提供する能力が、競争の勝敗を分けます。顧客の金融生活全体を深く理解することが不可欠です。" },
+                    { id: 'ecosystem', title: 'エコシステム・オーケストレーター', icon: '🌐', content: "金融機関は、自社だけですべてを提供しようとするのではなく、フィンテックや他業種の企業と戦略的に連携し、顧客の幅広い課題を解決する「エコシステム」の中心的存在へと進化していく必要があります。" }
+                ]
+            }
+        ]
+    },
+    banking: {
+        name: "銀行",
+        title: "銀行業界の現状と課題",
+        intro: "日本の銀行業界は、メガバンク3行が圧倒的な存在感を放つ一方、デジタル化の波と新たな競争相手の出現により、大きな変革期を迎えています。このセクションでは、銀行の業務フロー、主要プレイヤーの業績、そして直面する特有の課題を詳しく見ていきます。",
+        operationalFlow: {
+            title: "銀行の業務フローと課題",
+            intro: "伝統的な銀行の業務フローは、対面・紙ベースのプロセスに大きく依存しており、これが非効率性の温床となっています。下の図の各段階をクリックして、業務内容と課題の詳細を確認してください。",
+            stages: [
+                { id: 'front', name: 'フロントオフィス', content: "【業務内容】預金、貸出、為替などの顧客対応。歴史的に支店での対面サービスが中心。\n【課題】紙とハンコ文化による非効率性。デジタルチャネルへの移行が急務だが、顧客体験が分断されがち。" },
+                { id: 'middle', name: 'ミドルオフィス', content: "【業務内容】与信審査、市場・金利リスク管理、コンプライアンス。特に反社会的勢力のチェックは日本特有の厳格なプロセス。\n【課題】リスク評価モデルの高度化と、コンプライアンス業務の効率化が求められる。" },
+                { id: 'back', name: 'バックオフィス', content: "【業務内容】勘定処理、決済、規制当局への報告書作成など。レガシーシステムの負荷が最も大きい部門。\n【課題】手作業によるデータ入力や、システム間の連携不足が、エラーや非効率性の主要因となっている。" }
+            ]
+        },
+        financials: {
+            title: "主要銀行の業績比較 (2023/24年度)",
+            intro: "下のボタンで指標を切り替えて、主要な銀行グループの財務パフォーマンスを比較できます。メガバンクは高い収益を上げていますが、その多くは海外事業によるもので、国内事業の収益性には依然として課題が残ります。",
+            data: {
+                labels: ['三菱UFJ FG', '三井住友FG', 'みずほFG', 'ゆうちょ銀行', '三井住友トラストG'],
+                datasets: [
+                    { label: '売上収益 (兆円)', data: [11.89, 9.35, 8.74, 2.65, 2.48], backgroundColor: 'rgba(54, 162, 235, 0.6)' },
+                    { label: '純利益 (兆円)', data: [1.94, 1.19, 0.89, 0.42, 0.26], backgroundColor: 'rgba(75, 192, 192, 0.6)' },
+                    { label: '総資産 (兆円)', data: [403.70, 295.24, 278.67, 233.91, 75.88], backgroundColor: 'rgba(255, 206, 86, 0.6)' },
+                    { label: '時価総額 (兆円)', data: [17.19, 11.57, 6.89, 4.93, 2.42], backgroundColor: 'rgba(153, 102, 255, 0.6)' }
+                ]
+            }
+        }
+    },
+    securities: {
+        name: "証券",
+        title: "証券業界の現状と課題",
+        intro: "証券業界は、ネット証券の台頭と「貯蓄から投資へ」という国策の追い風を受け、大きな変革の最中にあります。従来のビジネスモデルからの転換が急務となっています。このセクションでは、証券会社の業務フロー、競争環境、そして特有の課題を探ります。",
+        operationalFlow: {
+            title: "証券の業務フローと課題",
+            intro: "証券業務はスピードと正確性が命です。取引の執行から決済まで、多数のプロセスが連携して動いています。下の図の各段階をクリックして、業務内容と課題の詳細を確認してください。",
+            stages: [
+                { id: 'front', name: 'フロントオフィス', content: "【業務内容】株式や債券の売買執行（セールス＆トレーディング）、M&Aアドバイザリー（IBD）、投資信託の運用（AM）。\n【課題】手数料自由化により、取引手数料に依存した収益モデルが崩壊。付加価値の高いアドバイスの提供が不可欠に。" },
+                { id: 'middle', name: 'ミドルオフィス', content: "【業務内容】約定内容の正確性確認（トレードサポート）、トレーダーのポジションやリスクの監視、市場分析（リサーチ）。\n【課題】リアルタイムでのリスク管理の高度化と、コンプライアンス強化が求められる。アルゴリズム取引の監視も重要。" },
+                { id: 'back', name: 'バックオフィス', content: "【業務内容】取引の清算・決済。日本では現在T+2決済が主流だが、国際標準であるT+1への移行が議論されている。\n【課題】決済サイクルの短縮化への対応。複数のシステムにまたがる決済プロセスの自動化・効率化が課題。" }
+            ]
+        },
+        financials: {
+            title: "主要証券会社の業績比較 (2023/24年度)",
+            intro: "下のボタンで指標を切り替えて、主要な証券会社の財務パフォーマンスを比較できます。NISA拡充による個人投資家の増加が追い風となっていますが、大手ネット証券との競争は激化しています。",
+            data: {
+                labels: ['野村HD', '大和証券グループ'],
+                datasets: [
+                    { label: '売上収益 (兆円)', data: [1.40, 0.81], backgroundColor: 'rgba(54, 162, 235, 0.6)' },
+                    { label: '純利益 (兆円)', data: [0.16, 0.15], backgroundColor: 'rgba(75, 192, 192, 0.6)' },
+                    { label: '総資産 (兆円)', data: [49.56, 26.43], backgroundColor: 'rgba(255, 206, 86, 0.6)' },
+                    { label: '時価総額 (兆円)', data: [2.73, 1.73], backgroundColor: 'rgba(153, 102, 255, 0.6)' }
+                ]
+            }
+        }
+    },
+    insurance: {
+        name: "保険",
+        title: "保険業界の現状と課題",
+        intro: "日本の保険業界は、超高齢化社会という構造的な課題に直面しつつ、インシュアテックによる新たな競争に晒されています。長期的な顧客関係を基盤としたビジネスモデルの変革が求められています。",
+        operationalFlow: {
+            title: "保険の業務フローと課題",
+            intro: "保険業務は、長期にわたる契約管理と、複雑な保険金支払いプロセスが特徴です。特に支払い査定は多くの手作業を伴います。下の図の各段階をクリックして、業務内容と課題の詳細を確認してください。",
+            stages: [
+                { id: 'front', name: 'フロントオフィス', content: "【業務内容】営業職員による対面販売が伝統的なモデル。リスクを評価し保険料を決定する「引受査定」が中核。\n【課題】営業職員モデルの効率化と、オンラインでのダイレクト販売強化。データに基づいた、より精緻な引受査定が求められる。" },
+                { id: 'middle', name: 'ミドルオフィス', content: "【業務内容】保険金請求の妥当性を審査する「支払査定」、新商品の開発、保険料収入を運用する資産運用。\n【課題】支払査定は、書類の確認や現地調査など、紙ベースで非効率なプロセスが多い。不正請求の検知も重要。" },
+                { id: 'back', name: 'バックオフィス', content: "【業務内容】保険証券の発行、保険料の徴収、契約情報の管理、承認された保険金の支払い処理。\n【課題】保険金支払いプロセスは、診断書など膨大な紙の書類を扱うため、非効率で時間がかかる。OCRなどによるデジタル化が急務。" }
+            ]
+        },
+        financials: {
+            title: "主要保険会社の業績比較 (2023/24年度)",
+            intro: "下のボタンで指標を切り替えて、主要な保険会社の財務パフォーマンスを比較できます。人口減少が長期的な逆風となる中、各社は健康増進型保険など新たな商品開発や海外事業で活路を見出そうとしています。",
+            data: {
+                labels: ['日本生命', '東京海上HD', '第一生命HD'],
+                datasets: [
+                    { label: '売上収益 (兆円)', data: [7.36, 6.78, 10.03], backgroundColor: 'rgba(54, 162, 235, 0.6)' },
+                    { label: '純利益 (兆円)', data: [0.51, 0.87, 0.46], backgroundColor: 'rgba(75, 192, 192, 0.6)' },
+                    { label: '総資産 (兆円)', data: [91.95, 31.83, 67.52], backgroundColor: 'rgba(255, 206, 86, 0.6)' },
+                    { label: '時価総額 (兆円)', data: [0, 9.81, 3.95], backgroundColor: 'rgba(153, 102, 255, 0.6)' }
+                ]
+            }
+        }
+    },
+    modalContent: {
+        dx: { title: "DXの緊急性", content: "日本の金融機関が直面する「2025年の崖」は、老朽化し、部門ごとにサイロ化されたレガシーシステムが引き起こす経済的損失のリスクを指します。これらのシステムは、過去の短期的なニーズに合わせて過度にカスタマイズされた結果、膨大な「技術的負債」となりました。システムの複雑化、ドキュメントの不備、そして開発に携わった技術者の引退が重なり、システムの維持・改修は困難を極めています。\n\n多くの金融機関は、リスクを分散させるために、顧客向けのフロントシステムを先行して近代化し、基幹システムは慎重に移行させるハイブリッドクラウド戦略（日本: 56%、世界平均: 38%）を採用しています。これは現実的な選択ですが、クラウドネイティブなフィンテック企業に比べ、イノベーションのスピードで後れを取る要因にもなっています。" },
+        fintech: { title: "フィンテックとの連携", content: "日本のフィンテックは、既存の金融機関を破壊する「ディスラプター」としてではなく、既存のサービスを補完・強化する「イネーブラー」としての役割が強いのが特徴です。これは、安定性とセキュリティを最優先する日本の金融文化と、消費者保護を重視する規制環境が背景にあります。\n\n金融機関はフィンテック企業と提携することで、自社の信頼性と顧客基盤を活用しつつ、新しい技術を安全に導入できます。一方、フィンテック企業は、提携によって巨大な市場へのアクセスと信用の獲得が可能になります。しかし、この協調的なモデルは、既存のビジネスモデルを根底から覆すような破壊的イノベーションを抑制してしまう可能性も指摘されています。" },
+        regulation: { title: "新たな金融政策と規制", content: "2024年3月、日本銀行はマイナス金利政策の解除を決定し、長年にわたる超金融緩和の時代に終止符を打ちました。この歴史的な転換は、銀行の利ざや改善に繋がり、収益機会をもたらす可能性があります。しかし同時に、低金利下でリスクを取って運用していた債券ポートフォリオの金利上昇リスクや、融資先の倒産増加リスクなど、新たな課題にも直面します。\n\n政策面では、政府が「資産所得倍増プラン」を掲げ、NISA（少額投資非課税制度）の大幅な拡充を進めています。これは「貯蓄から投資へ」の流れを加速させ、証券・資産運用業界にとっては大きな追い風となっています。" },
+        esg: { title: "ESG経営の浸透", content: "日本におけるESGは、欧米のような政治的な対立とは一線を画し、国の長期的な経済競争力を高めるための「産業政策」として位置づけられています。政府は2050年のカーボンニュートラル達成を目標に掲げ、GX（グリーン・トランスフォーメーション）債を発行するなど、金融システムを通じて産業界の脱炭素化を後押ししています。\n\nこの動きを決定づけたのが、世界最大の年金基金であるGPIFの存在です。GPIFが早期からESG投資を本格化させたことで、市場全体のESGへの取り組みが加速しました。企業の気候関連リスクの情報開示を求めるコーポレートガバナンス・コードの改訂も、この流れを後押ししています。" },
+        embedded: { title: "Embedded Finance (組込型金融)", content: "金融の未来像の一つが、金融サービスが日常生活のあらゆる場面に「溶け込む」世界です。例えば、ECサイトで商品購入と同時にローンを組んだり、旅行予約サイトで保険に加入したりすることが当たり前になります。このトレンドにより、金融機関は、BaaSプロバイダーとして非金融企業に金融機能を提供する「インフラ屋」になるか、あるいは様々なプラットフォーム上で顧客に選ばれる「ブランド」となるかの戦略的選択を迫られます。" },
+        personalization: { title: "ハイパー・パーソナライゼーション", content: "これからの金融サービスでは、顧客を大まかなセグメントで分けるのではなく、データとAIを用いて一人ひとりの状況や目標に合わせた最適なアドバイスや商品をリアルタイムで提供する「ハイパー・パーソナライゼーション」が競争力の源泉となります。これを実現するには、サイロ化された顧客データを統合し、顧客の金融生活全体を360度から理解する高度なデータ分析基盤が不可欠です。" },
+        ecosystem: { title: "エコシステム・オーケストレーター", content: "伝統的な、自前主義の垂直統合型金融機関のモデルは時代遅れになりつつあります。未来のリーディングカンパニーは、自社で全ての機能を開発するのではなく、フィンテック企業、ITジャイアント、さらにはヘルスケアやリテールといった他業種の企業とも戦略的にパートナーシップを組み、より広範な顧客の課題を解決する「エコシステム」を主導する「オーケストレーター」としての役割を担うことになるでしょう。" }
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const appContent = document.getElementById('app-content');
+    const mainNav = document.getElementById('main-nav');
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    const modalClose = document.getElementById('modal-close');
+    let financialChart = null;
+    let currentFlowStage = 'front';
+    let currentViewName = 'overview';
+
+    function formatText(text) {
+        return text.replace(/\n/g, '<br>');
+    }
+
+    function showModal(contentId) {
+        const content = reportData.modalContent[contentId];
+        if (content) {
+            modalTitle.textContent = content.title;
+            modalBody.innerHTML = formatText(content.content);
+            modal.classList.add('visible');
+        }
+    }
+    
+    function hideModal() {
+        modal.classList.remove('visible');
+    }
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target === modalClose) {
+            hideModal();
+        }
+    });
+
+    function createOverviewView() {
+        const viewData = reportData.overview;
+        let html = `<div class="fade-in">
+            <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">${viewData.title}</h2>
+            <p class="mt-4 text-lg leading-8 text-slate-600">${viewData.intro}</p>`;
+
+        viewData.sections.forEach(section => {
+            html += `<div class="mt-12">
+                <h3 class="text-2xl font-bold text-slate-800">${section.title}</h3>`;
+            if (section.intro) {
+                html += `<p class="mt-2 text-slate-600">${section.intro}</p>`;
+            }
+
+            if (section.type === 'cards') {
+                html += `<div class="mt-6 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">`;
+                section.items.forEach(item => {
+                    html += `<div class="content-card bg-white rounded-xl shadow-md p-6" data-modal-id="${item.id}">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 text-2xl">${item.icon}</div>
+                        <h4 class="mt-4 text-lg font-semibold text-slate-900">${item.title}</h4>
+                        <p class="mt-2 text-sm text-slate-600">${item.content}</p>
+                    </div>`;
+                });
+                html += `</div>`;
+            } else if (section.type === 'list') {
+                html += `<div class="mt-6 space-y-4">`;
+                section.items.forEach(item => {
+                    html += `<div class="bg-white rounded-lg shadow-sm p-4">
+                        <h4 class="font-semibold text-slate-800">${item.title}</h4>
+                        <p class="text-sm text-slate-600">${item.content}</p>
+                    </div>`;
+                });
+                html += `</div>`;
+            }
+            html += `</div>`;
+        });
+        html += `</div>`;
+        return html;
+    }
+    
+    function createFinancialChart(data) {
+        const ctx = document.getElementById('financialChartCanvas').getContext('2d');
+        if (financialChart) {
+            financialChart.destroy();
+        }
+        
+        financialChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [data.datasets[0]]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y + ' 兆円';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: data.datasets[0].label
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            callback: function(value, index, ticks) {
+                                const label = this.getLabelForValue(value);
+                                return label.length > 10 ? label.substring(0, 10) + '...' : label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        const metricButtons = document.getElementById('metric-selector');
+        metricButtons.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                const metricIndex = e.target.dataset.metric;
+                const newDataset = data.datasets[metricIndex];
+                
+                financialChart.data.datasets[0] = newDataset;
+                financialChart.options.scales.y.title.text = newDataset.label;
+                financialChart.update();
+                
+                metricButtons.querySelectorAll('button').forEach(btn => btn.classList.remove('bg-sky-600', 'text-white'));
+                e.target.classList.add('bg-sky-600', 'text-white');
+            }
+        });
+    }
+
+    async function getAiSolution() {
+        const aiResponseContainer = document.getElementById('ai-response-container');
+        if (!currentViewName || currentViewName === 'overview') return;
+
+        const sectorData = reportData[currentViewName];
+        const stageData = sectorData.operationalFlow.stages.find(s => s.id === currentFlowStage);
+
+        if (!sectorData || !stageData) return;
+
+        aiResponseContainer.innerHTML = `
+            <div class="flex items-center space-x-2 text-slate-500">
+                <div class="spinner"></div>
+                <span>AIが解決策を生成中...</span>
+            </div>`;
+
+        const prompt = `あなたは日本の金融業界に詳しい経営コンサルタントです。以下の課題に対して、具体的で実行可能な解決策を3つ提案してください。解決策には、最新のデジタルトランスフォーメーション（DX）のトレンドやベストプラクティスを盛り込んでください。
+
+業界: ${sectorData.name}
+業務領域: ${stageData.name}
+現在の課題:
+${stageData.content.split('【課題】')[1]}
+
+提案は、以下の形式で記述してください。
+
+### 解決策1: [具体的な解決策のタイトル]
+[解決策の詳細な説明]
+
+### 解決策2: [具体的な解決策のタイトル]
+[解決策の詳細な説明]
+
+### 解決策3: [具体的な解決策のタイトル]
+[解決策の詳細な説明]
+`;
+        
+        try {
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const response = await fetch(apiUrl, {
+                     method: 'POST',
+                     headers: { 'Content-Type': 'application/json' },
+                     body: JSON.stringify(payload)
+                 });
+            
+            if (!response.ok) {
+                 throw new Error(`API Error: ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            
+            let text = 'AIからの応答がありません。';
+            if (result.candidates && result.candidates.length > 0 &&
+              result.candidates[0].content && result.candidates[0].content.parts &&
+              result.candidates[0].content.parts.length > 0) {
+              text = result.candidates[0].content.parts[0].text;
+            } else {
+              throw new Error("Invalid API response structure");
+            }
+
+            const formattedHtml = text
+                .replace(/### (.*?)\n/g, '<h4 class="text-md font-semibold text-slate-800 mt-4">$1</h4>')
+                .replace(/\n/g, '<br>');
+
+            aiResponseContainer.innerHTML = `<div class="prose prose-sm max-w-none text-slate-700">${formattedHtml}</div>`;
+        } catch (error) {
+            console.error("Error fetching AI solution:", error);
+            aiResponseContainer.innerHTML = `<p class="text-red-500">解決策の生成中にエラーが発生しました。しばらくしてから再度お試しください。</p>`;
+        }
+    }
+
+    function createSectorView(viewName) {
+        currentViewName = viewName;
+        currentFlowStage = 'front'; // Reset to default stage
+        const viewData = reportData[viewName];
+        let html = `<div class="fade-in">
+            <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">${viewData.title}</h2>
+            <p class="mt-4 text-lg leading-8 text-slate-600">${viewData.intro}</p>`;
+            
+        if(viewData.operationalFlow) {
+            const flowData = viewData.operationalFlow;
+            html += `<div class="mt-12">
+                <h3 class="text-2xl font-bold text-slate-800">${flowData.title}</h3>
+                <p class="mt-2 text-slate-600">${flowData.intro}</p>
+                <div class="mt-6 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">`;
+            
+            flowData.stages.forEach((stage, index) => {
+                html += `<div class="flow-diagram-box w-full md:w-1/3 border-2 border-slate-300 rounded-lg p-4 text-center" data-stage="${stage.id}">
+                    <h4 class="font-semibold text-slate-900">${stage.name}</h4>
+                </div>`;
+                if (index < flowData.stages.length - 1) {
+                    html += `<div class="text-3xl text-slate-400 transform rotate-90 md:rotate-0">→</div>`;
+                }
+            });
+
+            html += `</div>
+            <div id="flow-detail" class="mt-4 bg-sky-50 p-6 rounded-lg min-h-[100px] text-slate-700 whitespace-pre-wrap">
+                ${formatText(flowData.stages[0].content)}
+            </div>
+            
+            <div class="mt-6 text-center">
+                <button id="ai-solution-btn" class="bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+                    ✨ AIによる解決策の提案
+                </button>
+            </div>
+            <div id="ai-response-container" class="mt-6 bg-white p-6 rounded-xl shadow-md min-h-[100px]">
+                <p class="text-slate-500">上のボタンをクリックして、選択中の業務課題に対するAIの解決策をご覧ください。</p>
+            </div>
+            </div>`;
+        }
+        
+        if(viewData.financials) {
+            const finData = viewData.financials;
+            html += `<div class="mt-12 bg-white p-6 rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold text-slate-800">${finData.title}</h3>
+                <p class="mt-2 text-slate-600">${finData.intro}</p>
+                <div id="metric-selector" class="my-4 flex flex-wrap gap-2">`;
+            finData.data.datasets.forEach((dataset, index) => {
+                const isActive = index === 0 ? 'bg-sky-600 text-white' : 'bg-slate-200 text-slate-700';
+                html += `<button data-metric="${index}" class="${isActive} font-semibold py-2 px-4 rounded-full text-sm transition hover:bg-sky-500 hover:text-white">${dataset.label.split(' ')[0]}</button>`;
+            });
+            
+            html +=`</div>
+                <div class="chart-container">
+                    <canvas id="financialChartCanvas"></canvas>
+                </div>
+            </div>`;
+        }
+
+        html += `</div>`;
+        return html;
+    }
+    
+    function renderView(viewName) {
+        let contentHtml = '';
+        if (viewName === 'overview') {
+            currentViewName = 'overview';
+            contentHtml = createOverviewView();
+        } else {
+            contentHtml = createSectorView(viewName);
+        }
+        appContent.innerHTML = contentHtml;
+        
+        // Add event listeners for the newly created content
+        if (viewName === 'overview') {
+            appContent.querySelectorAll('.content-card').forEach(card => {
+                card.addEventListener('click', () => showModal(card.dataset.modalId));
+            });
+        } else {
+            if(reportData[viewName].financials) {
+                createFinancialChart(reportData[viewName].financials.data);
+            }
+            if(reportData[viewName].operationalFlow) {
+                const flowBoxes = appContent.querySelectorAll('.flow-diagram-box');
+                const flowDetail = appContent.querySelector('#flow-detail');
+                const aiSolutionBtn = document.getElementById('ai-solution-btn');
+                const aiResponseContainer = document.getElementById('ai-response-container');
+                
+                flowBoxes[0].classList.add('active');
+
+                flowBoxes.forEach(box => {
+                    box.addEventListener('click', () => {
+                        flowBoxes.forEach(b => b.classList.remove('active'));
+                        box.classList.add('active');
+                        currentFlowStage = box.dataset.stage;
+                        const stageData = reportData[viewName].operationalFlow.stages.find(s => s.id === currentFlowStage);
+                        flowDetail.innerHTML = formatText(stageData.content);
+                        aiResponseContainer.innerHTML = `<p class="text-slate-500">上のボタンをクリックして、選択中の業務課題に対するAIの解決策をご覧ください。</p>`;
+                    });
+                });
+
+                aiSolutionBtn.addEventListener('click', getAiSolution);
+            }
+        }
+    }
+
+    // Initial render
+    renderView('overview');
+});
+    </script>
+</body>
+</html> 
