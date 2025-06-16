@@ -442,6 +442,34 @@
                 transform: translateY(0);
             }
         }
+
+        /* Solution Cards */
+        .solution-card {
+            position: relative;
+        }
+
+        .solution-preview, .solution-full {
+            line-height: 1.6;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .expand-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        .expand-btn:hover {
+            background: #2c5aa0;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -576,6 +604,24 @@ const reportData = {
                     { label: '時価総額 (兆円)', data: [17.19, 11.57, 6.89, 2.1, 2.42], backgroundColor: 'rgba(153, 102, 255, 0.6)' }
                 ]
             }
+        },
+        aiSolutions: {
+            title: "AIによる解決策の提案",
+            intro: `日本の金融業界、特に銀行フロントオフィスにおける紙とハンコ文化による非効率性、およびデジタルチャネル移行に伴う顧客体験の分断という課題は、DX推進における喫緊のテーマです。これらの課題に対し、最新のDXトレンドとベストプラクティスを踏まえた具体的かつ実行可能な解決策を3つ提案します。`,
+            solutions: [
+                {
+                    title: "完全にデジタルで完結する「ノンストップ・ジャーニー」構築",
+                    content: `現在の課題である「紙とハンコ文化による非効率性」と「デジタルチャネル移行時の分断」の根源にアプローチするため、主要な顧客手続き（口座開設、ローン申し込み、住所変更など）について、開始から完了までを完全にデジタルで完結させる「ノンストップ・ジャーニー」を構築します。\n\n具体的には、以下の要素を組み合わせます。\n• **オンライン本人確認（eKYC）の高度化:** スマートフォンアプリやWebブラウザから、顔認証と公的書類の照合により非対面で本人確認を完遂します。精度向上と手続き時間の短縮を目指します。\n• **電子契約・電子署名の導入拡大:** 各種契約書や申込書を電子化し、物理的な書類の郵送や捺印を不要とします。法的に有効な電子署名サービスを活用し、改ざん防止や真正性の確保を図ります。\n• **デジタルワークフローの自動化:** 顧客が入力・提出した情報や契約書は、自動的に社内システムに取り込まれ、審査や承認プロセスがデジタルワークフローによって自動化・効率化されます。RPA（Robotic Process Automation）やBPM（Business Process Management）ツールを活用し、手作業や紙の回覧を排除します。\n• **API連携による情報連携:** 顧客が異なるチャネル（Webサイト、アプリ）で開始した手続きを、中断なく別のチャネルで再開したり、過去の入力情報を引き継いだりできるよう、システム間のAPI連携を強化します。これにより、顧客は同じ情報を繰り返し入力する手間から解放されます。\n\nこの解決策により、顧客は自宅や外出先から場所や時間を選ばずに手続きを完了でき、銀行側は書類作成・郵送・保管コストや人的ミスの削減、手続き時間の短縮による業務効率の大幅な向上が見込めます。特に、若年層やデジタルネイティブ層への顧客体験価値を向上させるとともに、既存の紙ベースの非効率性を根本から解消します。`
+                },
+                {
+                    title: "AIとデータ活用による「パーソナル・オムニチャネル」体験提供",
+                    content: `デジタルチャネルへの移行が進む中で失われがちな「対面ならではのきめ細やかな対応」や「顧客一人ひとりに合わせたパーソナルな体験」を、デジタル技術で再現・強化し、チャネル間の分断を解消します。\n\nこの解決策の核となるのは、顧客データプラットフォーム（CDP）の構築と、それを活用したAIによる分析・レコメンデーション、および各チャネル（Web、アプリ、有人チャット、ビデオ通話、店舗）のシームレスな連携です。\n• **顧客データプラットフォーム（CDP）構築:** 顧客の利用履歴、Webサイト上の行動、チャット履歴、商品保有情報など、あらゆるチャネルで得られるデータを統合・分析します。\n• **AIによるパーソナル化:** CDPで分析されたデータに基づき、顧客のニーズや関心事をAIが予測し、最適な商品・サービスをレコメンドしたり、プッシュ通知やアプリ内メッセージでタイムリーな情報を提供したりします。これにより、顧客は自分に合った情報に効率的にアクセスできるようになります。\n• **オムニチャネル連携の強化:**\n  - **AIチャットボットと有人チャットの連携:** 簡単な問い合わせはAIチャットボットで対応し、複雑な相談や手続きはスムーズに有人チャットやビデオ通話に引き継ぎます。その際、チャットボットとのやり取り履歴がオペレーターに共有され、顧客は同じ説明を繰り返す必要がなくなります。\n  - **リモート接客ソリューション導入:** 高度な専門知識が必要な相談（例: 資産運用、住宅ローン）や、店舗に来店が難しい顧客向けに、セキュアなビデオ通話を用いたリモート接客環境を提供します。画面共有や電子書類への共同書き込み機能などを活用し、対面に近い体験を実現します。\n  - **デジタルと店舗の連携:** アプリやWebサイトから簡単に店舗への来店予約を可能にし、来店時には予約情報や事前の問い合わせ内容が担当者に共有されている状態を作ります。また、店舗内のセルフサービス端末やデジタルサイネージを活用し、オンライン情報へのアクセスや手続きのサポートを行います。\n\nこの解決策により、顧客は自身の都合に合わせて最適なチャネルを選択でき、どのチャネルを利用しても一貫性のあるパーソナルなサポートを受けることができます。銀行側は、顧客理解を深めることでクロスセル/アップセルの機会を増やし、顧客満足度とロイヤリティの向上に繋げることができます。`
+                },
+                {
+                    title: "ローコード/ノーコード活用による現場主導の業務効率化とUX改善",
+                    content: `金融機関におけるシステム開発は、その厳格な規制や複雑性から、通常、時間とコストがかかります。このボトルネックを解消し、フロントオフィスの現場で日々発生する非効率性の解消や、顧客からのフィードバックに基づくUI/UX改善を迅速に行うため、ローコード/ノーコード開発プラットフォームを導入・活用します。\n\n• **ローコード/ノーコードプラットフォームの導入:** フロントオフィス業務における特定のタスク（例: 顧客情報入力支援ツール、簡易アンケート収集フォーム、営業担当者向け報告ツール、特定の申請フロー）の開発・改修にローコード/ノーコード開発プラットフォームを導入します。\n• **現場担当者へのトレーニングと権限付与:** IT部門のサポートの下、現場の業務知識を持つ担当者（ビジネスユーザー）に対し、ローコード/ノーコードプラットフォームの利用に関するトレーニングを実施し、一定範囲でのアプリケーション開発やワークフロー構築の権限を付与します。\n• **小さな改善の積み重ね:** 現場の担当者が自ら業務プロセスを見直し、必要なデジタルツールや簡易アプリケーションを迅速に作成・展開します。これにより、IT部門に依頼せずとも、紙ベースで行っていた作業のデジタル化や、既存システムの隙間を埋める効率化ツールを、アジャイルかつ低コストで実現します。\n• **顧客フィードバックの迅速な反映:** 顧客からの「手続きが分かりにくい」「入力項目が多い」といったフィードバックを収集し、ローコード/ノーコードツールを用いてフロントオフィスのUI/UXの改善案を迅速にプロトタイピング・検証・実装します。\n\nこの解決策は、大規模な基幹システム改修を伴わないため、比較的短期間かつ低コストで導入可能です。現場が主導権を持つことで、真に業務に即した、あるいは顧客の声を反映した使いやすいツールが生まれやすくなります。これにより、紙とハンコに依存していた現場の非効率性を現場主導で解消し、スピーディな顧客体験の改善を実現することで、銀行全体のDX推進に弾みをつけることが期待できます。ただし、セキュリティやガバナンスのルール設定はIT部門が責任を持って行う必要があります。`
+                }
+            ]
         }
     },
     securities: {
@@ -996,6 +1042,37 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
         
+        // AI Solutions (only for banking)
+        if (viewName === 'banking' && data.aiSolutions) {
+            const aiSol = data.aiSolutions;
+            html += `
+                <div class="content-section">
+                    <h3 class="section-subtitle">${aiSol.title}</h3>
+                    <p class="section-text">${aiSol.intro}</p>
+                    
+                    <div class="card-grid">`;
+            
+            aiSol.solutions.forEach((solution, index) => {
+                html += `
+                    <div class="card solution-card" data-solution="${index}">
+                        <h4 class="card-title">${solution.title}</h4>
+                        <div class="card-text solution-preview">
+                            ${solution.content.substring(0, 150)}...
+                        </div>
+                        <div class="card-text solution-full" style="display: none;">
+                            ${formatText(solution.content)}
+                        </div>
+                        <button class="expand-btn" onclick="toggleSolution(${index})">詳細を見る</button>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                </div>
+            `;
+        }
+
         // Financial Data
         if (data.financials) {
             const fin = data.financials;
@@ -1095,6 +1172,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize
     renderView('overview');
 });
+
+// Solution expand/collapse functionality
+function toggleSolution(index) {
+    const solutionCard = document.querySelector(`[data-solution="${index}"]`);
+    const preview = solutionCard.querySelector('.solution-preview');
+    const full = solutionCard.querySelector('.solution-full');
+    const btn = solutionCard.querySelector('.expand-btn');
+    
+    if (full.style.display === 'none') {
+        preview.style.display = 'none';
+        full.style.display = 'block';
+        btn.textContent = '折りたたむ';
+    } else {
+        preview.style.display = 'block';
+        full.style.display = 'none';
+        btn.textContent = '詳細を見る';
+    }
+}
 
 // Theme functionality
 function toggleTheme() {
