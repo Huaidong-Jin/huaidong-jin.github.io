@@ -116,8 +116,9 @@
     <div class="min-h-screen">
         <header class="bg-white shadow-sm sticky top-0 z-40">
             <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col sm:flex-row justify-between items-center">
-                    <div class="flex items-center space-x-4 mb-4 sm:mb-0">
+                <!-- Main navigation -->
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center space-x-4">
                         <a href="/" class="text-2xl font-bold text-slate-900 hover:text-sky-600 transition">JK</a>
                         <div class="hidden sm:flex space-x-4">
                             <a href="/" class="text-slate-600 hover:text-slate-900 transition">Home</a>
@@ -126,15 +127,21 @@
                             <a href="https://github.com/JimmyKin" target="_blank" class="text-slate-600 hover:text-slate-900 transition">Projects</a>
                         </div>
                     </div>
-                    <h1 class="text-2xl font-bold text-slate-900 text-center sm:text-left">日本の金融業界 インタラクティブ分析</h1>
-                    <nav id="main-nav" class="flex flex-wrap justify-center space-x-2 mt-4 sm:mt-0">
+                </div>
+                
+                <!-- Page title and content navigation -->
+                <div class="text-center">
+                    <h1 class="text-3xl font-bold text-slate-900 mb-4">日本の金融業界 インタラクティブ分析</h1>
+                    
+                    <!-- Category navigation -->
+                    <nav id="main-nav" class="flex flex-wrap justify-center space-x-2 mb-4">
                         <button data-view="overview" class="nav-button active font-semibold py-2 px-4 rounded-full text-sm sm:text-base">全体像</button>
                         <button data-view="banking" class="nav-button font-semibold py-2 px-4 rounded-full text-sm sm:text-base">銀行</button>
                         <button data-view="securities" class="nav-button font-semibold py-2 px-4 rounded-full text-sm sm:text-base">証券</button>
                         <button data-view="insurance" class="nav-button font-semibold py-2 px-4 rounded-full text-sm sm:text-base">保険</button>
                     </nav>
-                </div>
-                <div class="mt-4 text-center">
+                    
+                    <!-- Date and author -->
                     <div class="text-sm text-slate-600">
                         <span class="date">2025年06月16日</span>
                         <span class="mx-2">•</span>
