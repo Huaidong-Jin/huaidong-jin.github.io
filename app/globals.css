@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --bg: #fff;
-  --fg: #000;
+  --bg: #000;
+  --fg: #fff;
 }
 
 [data-theme="dark"] {

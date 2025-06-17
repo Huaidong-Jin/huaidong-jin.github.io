@@ -43,14 +43,6 @@ export default function Header() {
             >
               About
             </Link>
-            <a
-              href="https://github.com/JimmyKin"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-foreground hover:opacity-80 transition-opacity"
-            >
-              Projects
-            </a>
           </div>
         </nav>
       </div>
