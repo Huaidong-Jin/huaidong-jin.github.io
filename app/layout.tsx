@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://jimmykin.github.io'),
   title: {
     default: 'Jimmy Kin Blog',
     template: '%s | Jimmy Kin Blog',

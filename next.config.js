@@ -18,8 +18,6 @@ const nextConfig = {
   },
   trailingSlash: true,
   output: 'export',
-  basePath: process.env.NODE_ENV === 'production' ? '/huaidong-blog' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/huaidong-blog' : '',
 };
 
 module.exports = withMDX(nextConfig); 
