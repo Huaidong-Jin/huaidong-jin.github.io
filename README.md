@@ -1,4 +1,4 @@
-# Jimmy Kin Blog
+# Jimmy Kin Blooog
 
 A modern, minimalist blog built with Next.js 13, featuring a clean black and white design inspired by Overreacted.io.
 
