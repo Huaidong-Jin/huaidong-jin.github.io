@@ -1,0 +1,97 @@
+---
+title: "TEMPLATE - Replace with Your PDF Title"
+date: "2025-01-15"
+summary: "Replace with a brief description of your PDF content (150-160 characters max)"
+tags: ["replace", "with", "relevant", "tags"]
+readingTime: "X min read"
+---
+
+# TEMPLATE - Your PDF Title Here
+
+*This is a template file for creating blog posts from PDF content. Replace all placeholder text with your actual content.*
+
+## Instructions for Use
+
+1. **Copy this file** and rename it to `YYYY-MM-DD-your-post-slug.mdx`
+2. **Update the frontmatter** (the section between the `---` lines) with your post details
+3. **Replace the content** below with your PDF content, formatted as markdown
+4. **Delete these instruction sections** before publishing
+
+---
+
+## Your Main Content Starts Here
+
+Replace this section with your PDF content. Use the formatting guidelines below:
+
+### Section Headers
+Use `##` for main sections from your PDF
+Use `###` for subsections
+
+### Text Formatting
+- **Bold text** for important emphasis
+- *Italic text* for subtle emphasis
+- `Inline code` for technical terms or file names
+
+### Lists
+Use bullet points:
+- Item 1
+- Item 2
+- Item 3
+
+Or numbered lists:
+1. First point
+2. Second point
+3. Third point
+
+### Tables (if your PDF has tables)
+| Column 1 | Column 2 | Column 3 |
+|----------|----------|----------|
+| Data 1   | Data 2   | Data 3   |
+| Data 4   | Data 5   | Data 6   |
+
+### Blockquotes (for important notes or quotes)
+> This is a blockquote. Use it for important excerpts or highlighted information from your PDF.
+
+### Code Blocks (if your PDF contains code)
+```python
+# Example code block
+def example_function():
+    return "Hello, World!"
+```
+
+### Special Formatting for Complex Content
+
+For complex layouts or special highlighting, you can use HTML with Tailwind classes:
+
+<div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400 my-4">
+<strong>Important Note:</strong> This is a highlighted section that stands out from regular text.
+</div>
+
+<div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200 my-4">
+<strong>Warning or Tip:</strong> Use this for warnings, tips, or special callouts from your PDF.
+</div>
+
+### Images (if your PDF contains images)
+If you need to include images:
+1. Save images to the `public/` directory
+2. Reference them like this:
+
+```markdown
+![Image description](/path/to/your/image.jpg)
+```
+
+### Mathematical Expressions (if needed)
+For inline math: $E = mc^2$
+For block math:
+$$
+\sum_{i=1}^{n} x_i = x_1 + x_2 + \cdots + x_n
+$$
+
+---
+
+## Final Steps
+
+1. **Review your content** for proper markdown formatting
+2. **Update the frontmatter** with accurate information
+3. **Test locally** by running `npm run dev`
+4. **Delete this template content** and keep only your actual post content 

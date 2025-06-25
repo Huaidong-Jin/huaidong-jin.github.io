@@ -1,14 +1,33 @@
 ---
-title: "如何使用这个博客系统 - 新手指南"
-date: "2025-01-02"
-summary: "详细介绍如何在这个Next.js博客系统中添加和编辑文章，包括Markdown语法和最佳实践。"
-tags: ["博客", "教程", "Next.js", "Markdown"]
-readingTime: "8 min read"
+title: "Your PDF Title Here"
+date: "2025-01-XX" (today's date)
+summary: "Brief description of your PDF content"
+tags: ["relevant", "tags", "here"]
+readingTime: "X min read" (will be auto-calculated)
 ---
 
-# 如何使用这个博客系统 - 新手指南
+# Your Main Title
 
-欢迎来到我的博客！这篇文章将教你如何在这个基于Next.js的博客系统中创建和编辑文章。
+Your PDF content here, formatted as markdown...
+
+## Section Headers
+Use ## for main sections from your PDF
+
+### Subsections
+Use ### for subsections
+
+**Bold text** for emphasis
+*Italic text* for emphasis
+
+- Bullet points
+- For lists
+
+1. Numbered lists
+2. When needed
+
+> Blockquotes for important notes or quotes
+
+`Inline code` for technical terms
 
 ## 什么是MDX？
 
