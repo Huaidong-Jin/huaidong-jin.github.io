@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="max-w-4xl mx-auto px-6 py-8 text-center">
         <div className="social-links mb-4">
           <a
-            href="https://github.com/JimmyKin"
+            href="https://github.com/Huaidong-Jin"
             target="_blank"
             rel="noopener noreferrer"
             className="text-foreground hover:opacity-80 transition-opacity text-2xl"

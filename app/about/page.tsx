@@ -34,7 +34,7 @@ export default function AboutPage() {
           <p>Feel free to connect with me on:</p>
           <ul>
             <li>
-              GitHub: <a href="https://github.com/JimmyKin" target="_blank" rel="noopener noreferrer">@JimmyKin</a>
+              GitHub: <a href="https://github.com/Huaidong-Jin" target="_blank" rel="noopener noreferrer">@Huaidong-Jin</a>
             </li>
           </ul>
           

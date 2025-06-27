@@ -7,7 +7,7 @@ import Footer from '@/components/Footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://jimmykin.github.io'),
+  metadataBase: new URL('https://huaidong-jin.github.io'),
   title: {
     default: 'Huaidong Jin Blog',
     template: '%s | Huaidong Jin Blog',
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://jimmykin.github.io/',
+    url: 'https://huaidong-jin.github.io/',
     title: 'Huaidong Jin Blog',
     description: 'Lifelong Generative AI & Robotics Pitfall Explorer',
     siteName: 'Huaidong Jin Blog',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Huaidong Jin Blog',
     description: 'Lifelong Generative AI & Robotics Pitfall Explorer',
-    creator: '@JimmyKin',
+    creator: '@HuaidongJin',
   },
   robots: {
     index: true,
