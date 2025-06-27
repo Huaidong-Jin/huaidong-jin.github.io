@@ -62,8 +62,8 @@ A modern, minimalist blog built with Next.js 13, featuring a clean black and whi
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/JimmyKin/huaidong-blog.git
-cd huaidong-blog
+git clone https://github.com/JimmyKin/jimmy.github.io.git
+cd jimmy.github.io
 ```
 
 2. Install dependencies:
@@ -157,11 +157,11 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **Huaidong Jin**
 - GitHub: [@JimmyKin](https://github.com/JimmyKin)
-- Website: [jimmykin.github.io](https://jimmykin.github.io)
+- Website: [jimmy.github.io](https://jimmy.github.io)
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/JimmyKin/huaidong-blog/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/JimmyKin/jimmy.github.io/issues).
 
 ---
 

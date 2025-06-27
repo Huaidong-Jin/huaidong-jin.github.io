@@ -5,7 +5,7 @@ const { getPosts } = require('../lib/getPosts');
 async function generateRSS() {
   try {
     const posts = await getPosts();
-    const siteUrl = 'https://jimmykin.github.io';
+    const siteUrl = 'https://jimmy.github.io';
     
     const rssItems = posts
       .slice(0, 10) // Only latest 10 posts
