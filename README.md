@@ -157,6 +157,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **Huaidong Jin**
 - GitHub: [@Huaidong-Jin](https://github.com/Huaidong-Jin)
+- LinkedIn: [@huaidong-jin](https://www.linkedin.com/in/huaidong-jin/)
 - Website: [huaidong-jin.github.io](https://huaidong-jin.github.io)
 
 ## 🤝 Contributing

@@ -36,6 +36,9 @@ export default function AboutPage() {
             <li>
               GitHub: <a href="https://github.com/Huaidong-Jin" target="_blank" rel="noopener noreferrer">@Huaidong-Jin</a>
             </li>
+            <li>
+              LinkedIn: <a href="https://www.linkedin.com/in/huaidong-jin/" target="_blank" rel="noopener noreferrer">@huaidong-jin</a>
+            </li>
           </ul>
           
           <p>
