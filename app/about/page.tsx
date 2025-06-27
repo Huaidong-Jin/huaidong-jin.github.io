@@ -43,7 +43,7 @@ export default function AboutPage() {
           
           <p>
             I believe in the power of sharing knowledge and learning from the community.
-            Whether you&apos;re a fellow developer, researcher, or someone curious about AI and robotics,
+            Whether you&apos;re a fellow vibe coder, researcher, or someone curious about AI and robotics,
             I hope you&apos;ll find value in the content I share here.
           </p>
         </div>
