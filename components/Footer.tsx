@@ -21,7 +21,7 @@ export default function Footer() {
           </a>
         </div>
         <p className="text-foreground/70">
-          © 2025 Jimmy Kin. All rights reserved.
+          © 2025 Huaidong Jin. All rights reserved.
         </p>
       </div>
     </footer>

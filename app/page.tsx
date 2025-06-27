@@ -10,7 +10,7 @@ export default async function HomePage() {
       {/* Hero Section */}
       <section className="text-center py-20">
         <h1 className="text-5xl font-bold mb-4 text-foreground">
-          Hi, I am Jimmy Kin
+          Hi, I am Huaidong Jin
         </h1>
         <h2 className="text-2xl text-foreground/80 mb-8">
           Lifelong Generative AI & Robotics Pitfall Explorer

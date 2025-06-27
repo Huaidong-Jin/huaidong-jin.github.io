@@ -4,7 +4,7 @@ import { getPosts } from '@/lib/getPosts';
 
 export const metadata: Metadata = {
   title: 'Posts',
-  description: 'All blog posts by Jimmy Kin',
+  description: 'All blog posts by Huaidong Jin',
 };
 
 export default async function PostsPage() {

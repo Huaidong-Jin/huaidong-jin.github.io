@@ -1,4 +1,4 @@
-# Jimmy Kin Blooog
+# Huaidong Jin Blooog
 
 A modern, minimalist blog built with Next.js 13, featuring a clean black and white design inspired by Overreacted.io.
 
@@ -155,7 +155,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 👤 Author
 
-**Jimmy Kin**
+**Huaidong Jin**
 - GitHub: [@JimmyKin](https://github.com/JimmyKin)
 - Website: [jimmykin.github.io](https://jimmykin.github.io)
 
@@ -165,4 +165,4 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 
 ---
 
-Built with ❤️ by Jimmy Kin
+Built with ❤️ by Huaidong Jin

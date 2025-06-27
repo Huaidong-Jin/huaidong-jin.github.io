@@ -9,7 +9,7 @@ jest.mock('next/navigation', () => ({
 describe('Header', () => {
   it('renders the logo', () => {
     render(<Header />);
-    expect(screen.getByText('Jimmy Kin')).toBeInTheDocument();
+    expect(screen.getByText('Huaidong Jin')).toBeInTheDocument();
   });
 
   it('renders navigation links', () => {

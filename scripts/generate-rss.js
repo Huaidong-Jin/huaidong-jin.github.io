@@ -22,13 +22,13 @@ async function generateRSS() {
     const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Jimmy Kin Blog</title>
+    <title>Huaidong Jin Blog</title>
     <description>Lifelong Generative AI & Robotics Pitfall Explorer</description>
     <link>${siteUrl}</link>
     <language>en</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    <managingEditor>jimmy@example.com (Jimmy Kin)</managingEditor>
-    <webMaster>jimmy@example.com (Jimmy Kin)</webMaster>
+    <managingEditor>jimmy@example.com (Huaidong Jin)</managingEditor>
+    <webMaster>jimmy@example.com (Huaidong Jin)</webMaster>
     ${rssItems}
   </channel>
 </rss>`;

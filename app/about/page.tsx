@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'Learn more about Jimmy Kin',
+  description: 'Learn more about Huaidong Jin',
 };
 
 export default function AboutPage() {
@@ -12,7 +12,7 @@ export default function AboutPage() {
         <h1>About Me</h1>
         <div className="content">
           <p>
-            Hello! I am Jimmy Kin, a passionate advocate of technology and innovation.
+            Hello! I am Huaidong Jin, a passionate advocate of technology and innovation.
             As a lifelong explorer of Generative AI & Robotics, I&apos;m constantly diving into
             the fascinating world of artificial intelligence and its applications.
           </p>

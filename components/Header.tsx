@@ -15,7 +15,7 @@ export default function Header() {
               href="/"
               className="text-2xl font-bold text-foreground hover:opacity-80"
             >
-              Jimmy Kin
+              Huaidong Jin
             </Link>
           </div>
           <div className="nav-links flex gap-8">
