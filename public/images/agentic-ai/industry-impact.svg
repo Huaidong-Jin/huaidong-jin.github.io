@@ -1,33 +1,81 @@
-<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
-  <text x="450" y="30" text-anchor="middle" fill="#92400e" font-size="20" font-weight="bold">Industry Impact Matrix</text>
+<svg viewBox="0 0 1100 650" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto; background: linear-gradient(135deg, #fff7ed 0%, #ffffff 100%);">
+  <defs>
+    <linearGradient id="veryHighGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#dc2626;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="highGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="medHighGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#eab308;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fde047;stop-opacity:1" />
+    </linearGradient>
+    <filter id="impactShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="2" dy="3" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.35"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Title -->
+  <text x="550" y="45" text-anchor="middle" fill="#92400e" font-size="26" font-weight="700" font-family="system-ui, -apple-system, sans-serif">Industry Impact Matrix</text>
+  <text x="550" y="70" text-anchor="middle" fill="#78716c" font-size="14" font-weight="500">Agentic AI Impact Across Key Industries</text>
   
   <!-- Insurance - Very High -->
-  <rect x="50" y="80" width="800" height="80" rx="10" fill="#dc2626" stroke="#991b1b" stroke-width="3"/>
-  <text x="70" y="110" fill="white" font-size="16" font-weight="bold">Insurance</text>
-  <text x="70" y="135" fill="white" font-size="12" font-style="italic">Claims adjudication automation</text>
-  <text x="750" y="125" text-anchor="end" fill="white" font-size="14" font-weight="bold">🔴 Very High Impact</text>
+  <g filter="url(#impactShadow)">
+    <rect x="80" y="100" width="940" height="95" rx="12" fill="url(#veryHighGrad)" stroke="#991b1b" stroke-width="2"/>
+    <circle cx="110" cy="130" r="12" fill="rgba(255,255,255,0.4)"/>
+    <text x="130" y="135" fill="white" font-size="20" font-weight="700" font-family="system-ui, -apple-system, sans-serif">Insurance</text>
+    <text x="130" y="160" fill="rgba(255,255,255,0.95)" font-size="14" font-weight="500" font-style="italic">Claims adjudication automation</text>
+    <circle cx="980" cy="147" r="8" fill="rgba(255,255,255,0.3)"/>
+    <text x="940" y="150" text-anchor="end" fill="white" font-size="16" font-weight="700">🔴 Very High Impact</text>
+  </g>
   
   <!-- Manufacturing - High -->
-  <rect x="50" y="180" width="800" height="80" rx="10" fill="#f59e0b" stroke="#d97706" stroke-width="3"/>
-  <text x="70" y="210" fill="white" font-size="16" font-weight="bold">Manufacturing</text>
-  <text x="70" y="235" fill="white" font-size="12" font-style="italic">Inventory &amp; supply chain management</text>
-  <text x="750" y="225" text-anchor="end" fill="white" font-size="14" font-weight="bold">🟠 High Impact</text>
+  <g filter="url(#impactShadow)">
+    <rect x="80" y="210" width="940" height="95" rx="12" fill="url(#highGrad)" stroke="#d97706" stroke-width="2"/>
+    <circle cx="110" cy="240" r="12" fill="rgba(255,255,255,0.4)"/>
+    <text x="130" y="245" fill="white" font-size="20" font-weight="700" font-family="system-ui, -apple-system, sans-serif">Manufacturing</text>
+    <text x="130" y="270" fill="rgba(255,255,255,0.95)" font-size="14" font-weight="500" font-style="italic">Inventory &amp; supply chain management</text>
+    <circle cx="980" cy="257" r="8" fill="rgba(255,255,255,0.3)"/>
+    <text x="940" y="260" text-anchor="end" fill="white" font-size="16" font-weight="700">🟠 High Impact</text>
+  </g>
   
   <!-- Retail - High -->
-  <rect x="50" y="280" width="800" height="80" rx="10" fill="#f59e0b" stroke="#d97706" stroke-width="3"/>
-  <text x="70" y="310" fill="white" font-size="16" font-weight="bold">Retail</text>
-  <text x="70" y="335" fill="white" font-size="12" font-style="italic">Hyper-personalization at scale</text>
-  <text x="750" y="325" text-anchor="end" fill="white" font-size="14" font-weight="bold">🟠 High Impact</text>
+  <g filter="url(#impactShadow)">
+    <rect x="80" y="320" width="940" height="95" rx="12" fill="url(#highGrad)" stroke="#d97706" stroke-width="2"/>
+    <circle cx="110" cy="350" r="12" fill="rgba(255,255,255,0.4)"/>
+    <text x="130" y="355" fill="white" font-size="20" font-weight="700" font-family="system-ui, -apple-system, sans-serif">Retail</text>
+    <text x="130" y="380" fill="rgba(255,255,255,0.95)" font-size="14" font-weight="500" font-style="italic">Hyper-personalization at scale</text>
+    <circle cx="980" cy="367" r="8" fill="rgba(255,255,255,0.3)"/>
+    <text x="940" y="370" text-anchor="end" fill="white" font-size="16" font-weight="700">🟠 High Impact</text>
+  </g>
   
   <!-- Pharmaceuticals - Medium-High -->
-  <rect x="50" y="380" width="800" height="80" rx="10" fill="#eab308" stroke="#ca8a04" stroke-width="3"/>
-  <text x="70" y="410" fill="white" font-size="16" font-weight="bold">Pharmaceuticals</text>
-  <text x="70" y="435" fill="white" font-size="12" font-style="italic">Drug discovery analytics</text>
-  <text x="750" y="425" text-anchor="end" fill="white" font-size="14" font-weight="bold">🟡 Medium-High Impact</text>
+  <g filter="url(#impactShadow)">
+    <rect x="80" y="430" width="940" height="95" rx="12" fill="url(#medHighGrad)" stroke="#ca8a04" stroke-width="2"/>
+    <circle cx="110" cy="460" r="12" fill="rgba(255,255,255,0.4)"/>
+    <text x="130" y="465" fill="white" font-size="20" font-weight="700" font-family="system-ui, -apple-system, sans-serif">Pharmaceuticals</text>
+    <text x="130" y="490" fill="rgba(255,255,255,0.95)" font-size="14" font-weight="500" font-style="italic">Drug discovery analytics</text>
+    <circle cx="980" cy="477" r="8" fill="rgba(255,255,255,0.3)"/>
+    <text x="940" y="480" text-anchor="end" fill="white" font-size="16" font-weight="700">🟡 Medium-High Impact</text>
+  </g>
   
   <!-- Financial Services - High -->
-  <rect x="50" y="480" width="800" height="80" rx="10" fill="#f59e0b" stroke="#d97706" stroke-width="3"/>
-  <text x="70" y="510" fill="white" font-size="16" font-weight="bold">Financial Services</text>
-  <text x="70" y="535" fill="white" font-size="12" font-style="italic">Compliance &amp; risk automation</text>
-  <text x="750" y="525" text-anchor="end" fill="white" font-size="14" font-weight="bold">🟠 High Impact</text>
+  <g filter="url(#impactShadow)">
+    <rect x="80" y="540" width="940" height="95" rx="12" fill="url(#highGrad)" stroke="#d97706" stroke-width="2"/>
+    <circle cx="110" cy="570" r="12" fill="rgba(255,255,255,0.4)"/>
+    <text x="130" y="575" fill="white" font-size="20" font-weight="700" font-family="system-ui, -apple-system, sans-serif">Financial Services</text>
+    <text x="130" y="600" fill="rgba(255,255,255,0.95)" font-size="14" font-weight="500" font-style="italic">Compliance &amp; risk automation</text>
+    <circle cx="980" cy="587" r="8" fill="rgba(255,255,255,0.3)"/>
+    <text x="940" y="590" text-anchor="end" fill="white" font-size="16" font-weight="700">🟠 High Impact</text>
+  </g>
 </svg>
