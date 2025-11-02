@@ -61,54 +61,61 @@ def create_market_structure_svg() -> str:
 
 
 def create_labor_augmentation_svg() -> str:
-    width, height = 1100, 720
-    labels = [
-        ("Customer Service Reps", 90),
-        ("Data Analysts", 88),
-        ("Software Engineers", 87),
-        ("Compliance Officers", 89),
-        ("Supply Chain Coordinators", 86),
-        ("Marketing Managers", 48),
-        ("HR Coordinators", 45),
-        ("Financial Analysts", 50),
-        ("Strategic Planners", 18),
-        ("Executive Leadership", 12),
-    ]
     sections = [
-        (0, 5, "High Augmentation 85-90%"),
-        (5, 8, "Medium Augmentation 40-50%"),
-        (8, 10, "Low Augmentation &lt;20%"),
+        ("High augmentation", 85, 90, [
+            ("Customer Service Reps", 90),
+            ("Data Analysts", 88),
+            ("Software Engineers", 87),
+            ("Compliance Officers", 89),
+            ("Supply Chain Coordinators", 86),
+        ]),
+        ("Medium augmentation", 40, 50, [
+            ("Marketing Managers", 48),
+            ("HR Coordinators", 45),
+            ("Financial Analysts", 50),
+        ]),
+        ("Low augmentation", 0, 20, [
+            ("Strategic Planners", 18),
+            ("Executive Leadership", 12),
+        ]),
     ]
 
-    lines = [f'  <rect x="0" y="0" width="{width}" height="{height}" fill="{BG}"/>',
-             f'  <text x="550" y="60" text-anchor="middle" fill="{FG}" font-size="26" font-weight="600" font-family="{FONT_STACK}">Labor Augmentation Potential</text>',
-             f'  <text x="550" y="92" text-anchor="middle" fill="{FG_MUTED}" font-size="14" font-family="{FONT_STACK}">Share of task time addressable by agentic AI</text>']
+    bar_height = 44
+    gap = 16
+    x_label = 220
+    x_bar = 320
+    max_width = 640
+    current_y = 150
+    last_bar_bottom = current_y
+    rows_svg: list[str] = []
 
-    y_start = 140
-    bar_height = 46
-    gap = 18
-    x_label = 180
-    x_bar = 300
-    max_width = 700
-
-    for start, end, title in sections:
-        y_title = y_start - 24 if start == 0 else y_start - 12
-        lines.append(f'  <text x="{x_label}" y="{y_title}" fill="{FG}" font-size="16" font-weight="600" font-family="{FONT_STACK}">{title}</text>')
-        for idx in range(start, end):
-            label, value = labels[idx]
-            y = y_start + idx * (bar_height + gap)
+    for title, low, high, rows in sections:
+        rows_svg.append(f'  <text x="{x_label}" y="{current_y - 32}" fill="{FG}" font-size="16" font-weight="600" font-family="{FONT_STACK}">{title} ({low}-{high}%)</text>')
+        for idx, (label, value) in enumerate(rows):
+            y = current_y + idx * (bar_height + gap)
             width_px = max_width * (value / 100)
-            lines.append(f'  <rect x="{x_bar}" y="{y}" width="{width_px:.1f}" height="{bar_height}" fill="{ACCENT}" opacity="0.85" rx="4"/>' )
-            lines.append(f'  <text x="{x_label}" y="{y + bar_height - 12}" fill="{FG}" font-size="15" font-family="{FONT_STACK}" text-anchor="end">{label}</text>')
-            lines.append(f'  <text x="{x_bar + width_px + 20:.1f}" y="{y + bar_height - 12}" fill="{FG}" font-size="15" font-weight="600" font-family="{FONT_STACK}">{value}%</text>')
+            rows_svg.append(f'  <rect x="{x_bar}" y="{y}" width="{width_px:.1f}" height="{bar_height}" fill="{ACCENT}" opacity="0.85" rx="4"/>' )
+            rows_svg.append(f'  <text x="{x_label - 20}" y="{y + bar_height/2 + 5}" fill="{FG}" font-size="15" font-family="{FONT_STACK}" text-anchor="end">{label}</text>')
+            rows_svg.append(f'  <text x="{x_bar + width_px + 18:.1f}" y="{y + bar_height/2 + 5}" fill="{FG}" font-size="15" font-weight="600" font-family="{FONT_STACK}">{value}%</text>')
+            last_bar_bottom = y + bar_height
+        current_y = last_bar_bottom + 2 * gap + 60
 
-    lines.append(f'  <line x1="{x_bar}" y1="660" x2="{x_bar + max_width}" y2="660" stroke="{SEPARATOR}" stroke-width="1"/>')
+    axis_y = last_bar_bottom + 40
+    footer_svg = [f'  <line x1="{x_bar}" y1="{axis_y}" x2="{x_bar + max_width}" y2="{axis_y}" stroke="{SEPARATOR}" stroke-width="1"/>']
     for tick in [0, 25, 50, 75, 100]:
         tx = x_bar + max_width * (tick / 100)
-        lines.append(f'  <line x1="{tx}" y1="656" x2="{tx}" y2="664" stroke="{SEPARATOR}" stroke-width="1"/>')
-        lines.append(f'  <text x="{tx}" y="682" text-anchor="middle" fill="{FG_MUTED}" font-size="12" font-family="{FONT_STACK}">{tick}%</text>')
+        footer_svg.append(f'  <line x1="{tx}" y1="{axis_y - 4}" x2="{tx}" y2="{axis_y + 4}" stroke="{SEPARATOR}" stroke-width="1"/>')
+        footer_svg.append(f'  <text x="{tx}" y="{axis_y + 24}" text-anchor="middle" fill="{FG_MUTED}" font-size="12" font-family="{FONT_STACK}">{tick}%</text>')
 
-    return svg_wrapper(width, height, "\n".join(lines))
+    total_height = int(axis_y + 70)
+    header_svg = [
+        f'  <rect x="0" y="0" width="1100" height="{total_height}" fill="{BG}"/>',
+        f'  <text x="550" y="60" text-anchor="middle" fill="{FG}" font-size="26" font-weight="600" font-family="{FONT_STACK}">Labor Augmentation Potential</text>',
+        f'  <text x="550" y="92" text-anchor="middle" fill="{FG_MUTED}" font-size="14" font-family="{FONT_STACK}">Share of task time addressable by agentic AI</text>'
+    ]
+
+    body = header_svg + rows_svg + footer_svg
+    return svg_wrapper(1100, total_height, "\n".join(body))
 
 
 def create_evolution_timeline_svg() -> str:
@@ -187,20 +194,19 @@ def create_adoption_timeline_svg() -> str:
         lines.append(f'  <circle cx="140" cy="{y-6}" r="3" fill="{ACCENT}"/>')
         lines.append(f'  <text x="160" y="{y}" fill="{FG_MUTED}" font-size="13" font-family="{FONT_STACK}">{text}</text>')
 
-    # Path arrows
-    lines.append(f'  <path d="M 240 360 L 760 220" stroke="{ACCENT}" stroke-width="2" fill="none" marker-end="url(#arrowSlimGreen)"/>')
-    lines.append(f'  <path d="M 240 360 L 760 320" stroke="{FG_MUTED}" stroke-width="2" fill="none" marker-end="url(#arrowSlimGray)"/>')
+    # Path arrows terminate just before boxes to avoid overlap
+    lines.append(f'  <path d="M 260 352 L 610 260" stroke="{ACCENT}" stroke-width="2.5" fill="none" marker-end="url(#arrowSlimGreen)"/>')
+    lines.append(f'  <path d="M 260 368 L 610 330" stroke="{FG_MUTED}" stroke-width="2.5" fill="none" marker-end="url(#arrowSlimGray)"/>')
 
     # Boxes for timelines
-    lines.append(f'  <rect x="640" y="180" width="300" height="110" rx="10" fill="none" stroke="{ACCENT}" stroke-width="1.5"/>' )
-    lines.append(f'  <text x="790" y="210" text-anchor="middle" fill="{FG}" font-size="16" font-weight="600" font-family="{FONT_STACK}">Accelerated (2030-2035)</text>')
-    lines.append(f'  <text x="790" y="240" text-anchor="middle" fill="{FG_MUTED}" font-size="14" font-family="{FONT_STACK}">$300-600B realized sooner</text>')
+    lines.append(f'  <rect x="640" y="200" width="320" height="110" rx="10" fill="none" stroke="{ACCENT}" stroke-width="1.5"/>' )
+    lines.append(f'  <text x="800" y="235" text-anchor="middle" fill="{FG}" font-size="18" font-weight="600" font-family="{FONT_STACK}">Accelerated (2030-2035)</text>')
+    lines.append(f'  <text x="800" y="265" text-anchor="middle" fill="{FG_MUTED}" font-size="14" font-family="{FONT_STACK}">$300-600B realized sooner</text>')
 
-    lines.append(f'  <rect x="640" y="300" width="300" height="110" rx="10" fill="none" stroke="{FG_MUTED}" stroke-width="1.5"/>' )
-    lines.append(f'  <text x="790" y="330" text-anchor="middle" fill="{FG}" font-size="16" font-weight="600" font-family="{FONT_STACK}">Conservative (2035-2040)</text>')
-    lines.append(f'  <text x="790" y="360" text-anchor="middle" fill="{FG_MUTED}" font-size="14" font-family="{FONT_STACK}">Follows cloud adoption pace</text>')
+    lines.append(f'  <rect x="640" y="320" width="320" height="110" rx="10" fill="none" stroke="{FG_MUTED}" stroke-width="1.5"/>' )
+    lines.append(f'  <text x="800" y="355" text-anchor="middle" fill="{FG}" font-size="18" font-weight="600" font-family="{FONT_STACK}">Conservative (2035-2040)</text>')
+    lines.append(f'  <text x="800" y="385" text-anchor="middle" fill="{FG_MUTED}" font-size="14" font-family="{FONT_STACK}">Follows cloud adoption pace</text>')
 
-    lines.append(f'  <text x="760" y="410" text-anchor="middle" fill="{FG_MUTED}" font-size="12" font-family="{FONT_STACK}">Arrow thickness represents confidence</text>')
     return svg_wrapper(width, height, arrow_defs + "\n" + "\n".join(lines))
 
 
@@ -231,31 +237,45 @@ def create_industry_impact_svg() -> str:
 
 def create_market_comparison_svg() -> str:
     width, height = 1100, 580
-    bar_data = [
-        ("US Application", 1000, 180),
-        ("US Services", 400, 310),
-        ("Global Services", 1000, 180),
-        ("US Application (ref)", 1000, 310),
-        ("Current IT (US)", 320, 440),
+    us = [
+        ("Application Layer", "~$1T"),
+        ("Services Layer", "$350-450B"),
+        ("Current IT Services", "$320B"),
     ]
-    scale = 0.6
+    global_data = [
+        ("Services Layer", "$0.9-1.1T"),
+        ("Application Layer (US ref)", "~$1T"),
+    ]
+    scale = 0.45
 
-    lines = [
+    body = [
         f'  <rect x="0" y="0" width="{width}" height="{height}" fill="{BG}"/>',
         f'  <text x="550" y="60" text-anchor="middle" fill="{FG}" font-size="26" font-weight="600" font-family="{FONT_STACK}">Market Comparison</text>',
-        f'  <text x="280" y="100" text-anchor="middle" fill="{FG_MUTED}" font-size="14" font-family="{FONT_STACK}">United States</text>',
-        f'  <text x="820" y="100" text-anchor="middle" fill="{FG_MUTED}" font-size="14" font-family="{FONT_STACK}">Global</text>'
+        f'  <text x="280" y="110" text-anchor="middle" fill="{FG_MUTED}" font-size="14" font-family="{FONT_STACK}">United States</text>',
+        f'  <text x="820" y="110" text-anchor="middle" fill="{FG_MUTED}" font-size="14" font-family="{FONT_STACK}">Global</text>'
     ]
 
-    for label, value, y in bar_data:
-        x = 180 if "Global" not in label else 720
-        width_px = value * scale
-        lines.append(f'  <rect x="{x}" y="{y}" width="{width_px}" height="50" fill="{ACCENT}" opacity="0.85"/>' )
-        lines.append(f'  <text x="{x}" y="{y - 12}" fill="{FG}" font-size="14" font-family="{FONT_STACK}">{label}</text>')
-        lines.append(f'  <text x="{x + width_px + 12}" y="{y + 30}" fill="{FG}" font-size="15" font-weight="600" font-family="{FONT_STACK}">${value if value < 1000 else "~$1T"}</text>')
+    y_start = 160
+    bar_height = 48
+    gap = 26
+    us_values = {"~$1T": 1000, "$350-450B": 400, "$320B": 320}
+    for idx, (label, value) in enumerate(us):
+        y = y_start + idx * (bar_height + gap)
+        value_num = us_values.get(value, 400)
+        width_px = scale * value_num
+        body.append(f'  <rect x="160" y="{y}" width="{width_px}" height="{bar_height}" fill="{ACCENT}" opacity="0.85"/>' )
+        body.append(f'  <text x="160" y="{y - 12}" fill="{FG}" font-size="13" font-family="{FONT_STACK}">{label}</text>')
+        body.append(f'  <text x="{160 + width_px - 12}" y="{y + bar_height/2 + 5}" text-anchor="end" fill="{FG}" font-size="15" font-weight="600" font-family="{FONT_STACK}">{value}</text>')
 
-    lines.append(f'  <text x="550" y="520" text-anchor="middle" fill="{FG_MUTED}" font-size="13" font-family="{FONT_STACK}">Services spend already surpasses current IT services</text>')
-    return svg_wrapper(width, height, "\n".join(lines))
+    for idx, (label, value) in enumerate(global_data):
+        y = y_start + idx * (bar_height + gap)
+        width_px = scale * 1000
+        body.append(f'  <rect x="640" y="{y}" width="{width_px}" height="{bar_height}" fill="{ACCENT}" opacity="0.85"/>' )
+        body.append(f'  <text x="640" y="{y - 12}" fill="{FG}" font-size="13" font-family="{FONT_STACK}">{label}</text>')
+        body.append(f'  <text x="{640 + width_px - 12}" y="{y + bar_height/2 + 5}" text-anchor="end" fill="{FG}" font-size="15" font-weight="600" font-family="{FONT_STACK}">{value}</text>')
+
+    body.append(f'  <text x="550" y="520" text-anchor="middle" fill="{FG_MUTED}" font-size="13" font-family="{FONT_STACK}">Services spend already surpasses current US IT services</text>')
+    return svg_wrapper(width, height, "\n".join(body))
 
 
 def main():

@@ -24,13 +24,12 @@
   <text x="160" y="226" fill="#cbd5f5" font-size="13" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">Early ROI proof points</text>
   <circle cx="140" cy="244" r="3" fill="#38bdf8"/>
   <text x="160" y="250" fill="#cbd5f5" font-size="13" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">Compressed adoption curve</text>
-  <path d="M 240 360 L 760 220" stroke="#38bdf8" stroke-width="2" fill="none" marker-end="url(#arrowSlimGreen)"/>
-  <path d="M 240 360 L 760 320" stroke="#cbd5f5" stroke-width="2" fill="none" marker-end="url(#arrowSlimGray)"/>
-  <rect x="640" y="180" width="300" height="110" rx="10" fill="none" stroke="#38bdf8" stroke-width="1.5"/>
-  <text x="790" y="210" text-anchor="middle" fill="#f8fafc" font-size="16" font-weight="600" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">Accelerated (2030-2035)</text>
-  <text x="790" y="240" text-anchor="middle" fill="#cbd5f5" font-size="14" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">$300-600B realized sooner</text>
-  <rect x="640" y="300" width="300" height="110" rx="10" fill="none" stroke="#cbd5f5" stroke-width="1.5"/>
-  <text x="790" y="330" text-anchor="middle" fill="#f8fafc" font-size="16" font-weight="600" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">Conservative (2035-2040)</text>
-  <text x="790" y="360" text-anchor="middle" fill="#cbd5f5" font-size="14" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">Follows cloud adoption pace</text>
-  <text x="760" y="410" text-anchor="middle" fill="#cbd5f5" font-size="12" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">Arrow thickness represents confidence</text>
+  <path d="M 260 352 L 610 260" stroke="#38bdf8" stroke-width="2.5" fill="none" marker-end="url(#arrowSlimGreen)"/>
+  <path d="M 260 368 L 610 330" stroke="#cbd5f5" stroke-width="2.5" fill="none" marker-end="url(#arrowSlimGray)"/>
+  <rect x="640" y="200" width="320" height="110" rx="10" fill="none" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="800" y="235" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="600" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">Accelerated (2030-2035)</text>
+  <text x="800" y="265" text-anchor="middle" fill="#cbd5f5" font-size="14" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">$300-600B realized sooner</text>
+  <rect x="640" y="320" width="320" height="110" rx="10" fill="none" stroke="#cbd5f5" stroke-width="1.5"/>
+  <text x="800" y="355" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="600" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">Conservative (2035-2040)</text>
+  <text x="800" y="385" text-anchor="middle" fill="#cbd5f5" font-size="14" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">Follows cloud adoption pace</text>
 </svg>
