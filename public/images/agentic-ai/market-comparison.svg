@@ -1,0 +1,39 @@
+<svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+  <text x="500" y="30" text-anchor="middle" fill="#1e40af" font-size="20" font-weight="bold">Market Value Comparison</text>
+  
+  <!-- US Market Bars -->
+  <text x="250" y="80" text-anchor="middle" fill="#374151" font-size="16" font-weight="bold">U.S. Market (Billions USD)</text>
+  
+  <!-- Application Layer -->
+  <rect x="100" y="120" width="300" height="80" rx="8" fill="#10b981" stroke="#059669" stroke-width="2"/>
+  <text x="250" y="160" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Application Layer</text>
+  <text x="250" y="185" text-anchor="middle" fill="white" font-size="14">~$1 Trillion</text>
+  
+  <!-- Services Layer -->
+  <rect x="100" y="230" width="240" height="80" rx="8" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+  <text x="220" y="270" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Services Layer</text>
+  <text x="220" y="295" text-anchor="middle" fill="white" font-size="14">$350-450B</text>
+  
+  <!-- Current IT Services -->
+  <rect x="100" y="340" width="192" height="80" rx="8" fill="#94a3b8" stroke="#64748b" stroke-width="2"/>
+  <text x="196" y="380" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Current IT Services</text>
+  <text x="196" y="405" text-anchor="middle" fill="white" font-size="14">$320B</text>
+  
+  <!-- Global Market Bars -->
+  <text x="750" y="80" text-anchor="middle" fill="#374151" font-size="16" font-weight="bold">Global Market (Trillions USD)</text>
+  
+  <!-- Global Services -->
+  <rect x="600" y="120" width="300" height="80" rx="8" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+  <text x="750" y="160" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Services Layer</text>
+  <text x="750" y="185" text-anchor="middle" fill="white" font-size="14">$0.9-1.1 Trillion</text>
+  
+  <!-- US Application (for scale) -->
+  <rect x="600" y="230" width="300" height="80" rx="8" fill="#10b981" stroke="#059669" stroke-width="2"/>
+  <text x="750" y="270" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Application Layer</text>
+  <text x="750" y="295" text-anchor="middle" fill="white" font-size="14">~$1 Trillion (US)</text>
+  
+  <!-- Note -->
+  <text x="500" y="450" text-anchor="middle" fill="#6b7280" font-size="12" font-style="italic">
+    Services/App Ratio: 0.70-0.80x | Services opportunity ($350-450B US) exceeds current IT services ($320B US)
+  </text>
+</svg>

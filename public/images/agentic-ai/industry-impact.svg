@@ -1,0 +1,33 @@
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+  <text x="450" y="30" text-anchor="middle" fill="#92400e" font-size="20" font-weight="bold">Industry Impact Matrix</text>
+  
+  <!-- Insurance - Very High -->
+  <rect x="50" y="80" width="800" height="80" rx="10" fill="#dc2626" stroke="#991b1b" stroke-width="3"/>
+  <text x="70" y="110" fill="white" font-size="16" font-weight="bold">Insurance</text>
+  <text x="70" y="135" fill="white" font-size="12" font-style="italic">Claims adjudication automation</text>
+  <text x="750" y="125" text-anchor="end" fill="white" font-size="14" font-weight="bold">🔴 Very High Impact</text>
+  
+  <!-- Manufacturing - High -->
+  <rect x="50" y="180" width="800" height="80" rx="10" fill="#f59e0b" stroke="#d97706" stroke-width="3"/>
+  <text x="70" y="210" fill="white" font-size="16" font-weight="bold">Manufacturing</text>
+  <text x="70" y="235" fill="white" font-size="12" font-style="italic">Inventory &amp; supply chain management</text>
+  <text x="750" y="225" text-anchor="end" fill="white" font-size="14" font-weight="bold">🟠 High Impact</text>
+  
+  <!-- Retail - High -->
+  <rect x="50" y="280" width="800" height="80" rx="10" fill="#f59e0b" stroke="#d97706" stroke-width="3"/>
+  <text x="70" y="310" fill="white" font-size="16" font-weight="bold">Retail</text>
+  <text x="70" y="335" fill="white" font-size="12" font-style="italic">Hyper-personalization at scale</text>
+  <text x="750" y="325" text-anchor="end" fill="white" font-size="14" font-weight="bold">🟠 High Impact</text>
+  
+  <!-- Pharmaceuticals - Medium-High -->
+  <rect x="50" y="380" width="800" height="80" rx="10" fill="#eab308" stroke="#ca8a04" stroke-width="3"/>
+  <text x="70" y="410" fill="white" font-size="16" font-weight="bold">Pharmaceuticals</text>
+  <text x="70" y="435" fill="white" font-size="12" font-style="italic">Drug discovery analytics</text>
+  <text x="750" y="425" text-anchor="end" fill="white" font-size="14" font-weight="bold">🟡 Medium-High Impact</text>
+  
+  <!-- Financial Services - High -->
+  <rect x="50" y="480" width="800" height="80" rx="10" fill="#f59e0b" stroke="#d97706" stroke-width="3"/>
+  <text x="70" y="510" fill="white" font-size="16" font-weight="bold">Financial Services</text>
+  <text x="70" y="535" fill="white" font-size="12" font-style="italic">Compliance &amp; risk automation</text>
+  <text x="750" y="525" text-anchor="end" fill="white" font-size="14" font-weight="bold">🟠 High Impact</text>
+</svg>
