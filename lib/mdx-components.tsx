@@ -78,4 +78,7 @@ export const mdxComponents: MDXComponents = {
   hr: () => (
     <hr className="my-8 border-t border-foreground/20" />
   ),
+  div: ({ children, ...props }) => (
+    <div {...props}>{children}</div>
+  ),
 }; 
