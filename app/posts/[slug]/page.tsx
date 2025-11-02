@@ -77,7 +77,17 @@ export default async function PostPage({ params }: Props) {
         </header>
         
         <div className="prose prose-lg max-w-none">
-          <MDXRemote source={post.content} components={mdxComponents} />
+          <MDXRemote 
+            source={post.content} 
+            components={mdxComponents}
+            options={{
+              parseFrontmatter: false,
+              mdxOptions: {
+                remarkPlugins: [],
+                rehypePlugins: [],
+              },
+            }}
+          />
         </div>
       </article>
     </div>
